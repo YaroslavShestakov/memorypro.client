@@ -9,12 +9,13 @@ import memorypro.windows.NewNoteWindow;
  * @author Jani Liikkanen
  */
 public class JPanelMain extends javax.swing.JPanel {
-
+    WindowListener listener;
     private boolean writingNote = false;
     /**
      * Creates new form JpanelMain
      */
-    public JPanelMain() {
+    public JPanelMain(WindowListener wl) {
+        listener = wl;
         initComponents();
     }
 
@@ -34,6 +35,7 @@ public class JPanelMain extends javax.swing.JPanel {
         btnAccount = new javax.swing.JButton();
         notePanel = new javax.swing.JPanel();
 
+        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdd.setText("Add note");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -41,8 +43,15 @@ public class JPanelMain extends javax.swing.JPanel {
             }
         });
 
+        btnRemove.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRemove.setText("Remove note");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
 
+        btnBrowse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBrowse.setText("Browse notes");
         btnBrowse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,15 +59,27 @@ public class JPanelMain extends javax.swing.JPanel {
             }
         });
 
+        btnSettings.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSettings.setText("Settings");
+        btnSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSettingsActionPerformed(evt);
+            }
+        });
 
+        btnAccount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAccount.setText("Account");
+        btnAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccountActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
         notePanel.setLayout(notePanelLayout);
         notePanelLayout.setHorizontalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 677, Short.MAX_VALUE)
+            .addGap(0, 659, Short.MAX_VALUE)
         );
         notePanelLayout.setVerticalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,31 +118,30 @@ public class JPanelMain extends javax.swing.JPanel {
                         .addComponent(btnSettings)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAccount)
-                        .addGap(0, 285, Short.MAX_VALUE)))
+                        .addGap(0, 275, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
-        // TODO add your handling code here:
+        listener.gotoBrowse();
     }//GEN-LAST:event_btnBrowseActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // Only allow for writing one note at a time.
-        if (!writingNote) {
-            writingNote = true;
-            NewNoteWindow noteWin = new NewNoteWindow();
-            JFrame noteFrame = new JFrame();
-            noteFrame.setSize(800,600);
-            noteFrame.getContentPane().add(noteWin);
-            noteFrame.setVisible(true);
-            noteFrame.addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    writingNote = false;
-                }
-            });
-        }
+        listener.addNote();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
+        listener.gotoAccount();
+    }//GEN-LAST:event_btnAccountActionPerformed
+
+    private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
+        listener.gotoSettings();
+    }//GEN-LAST:event_btnSettingsActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        listener.removeNote();
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

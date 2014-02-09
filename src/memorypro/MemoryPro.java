@@ -2,6 +2,7 @@ package memorypro;
 
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import memorypro.windows.*;
 
 /**
  *
@@ -12,6 +13,9 @@ public class MemoryPro extends JFrame {
 //    public WindowListener listener;
     JPanelLogin loginScreen;
     JPanelMain mainScreen;
+    JPanelBrowse browseScreen;
+    JPanelAccount accountScreen;
+    WindowListener listener;
     /**
      * @param args the command line arguments
      */
@@ -22,7 +26,7 @@ public class MemoryPro extends JFrame {
     
     public MemoryPro() {
     
-        WindowListener listener = new WindowListener(this);
+        listener = new WindowListener(this);
         loginScreen = new JPanelLogin(listener);
         
         getContentPane().add(loginScreen);
@@ -34,15 +38,49 @@ public class MemoryPro extends JFrame {
     }
     
     public void changeView(String view) {
-        if (view.equals("main")) {
-            getContentPane().remove(loginScreen);
-            if (mainScreen == null) {
-                mainScreen = new JPanelMain();
-                System.out.println("new main screen");
-            }
-            getContentPane().add(mainScreen);
-            repaint();
-            printAll(getGraphics());
+        switch(view) {
+            case "main":
+                gotoMain();
+                break;
+            case "browse":
+                gotoBrowse();
+                break;
+            case "account":
+                gotoAccount();
+                break;
+            default:
+                System.out.println("Cannot find view " + view);
+                break;
         }
+    }
+    
+    public void gotoMain() {
+        getContentPane().removeAll();
+        if (mainScreen == null) {
+            mainScreen = new JPanelMain(listener);
+        }
+        getContentPane().add(mainScreen);
+        repaint();
+        printAll(getGraphics());
+    }
+    
+    public void gotoBrowse() {
+        getContentPane().removeAll();
+        if (browseScreen == null) {
+            browseScreen = new JPanelBrowse(listener);
+        }
+        getContentPane().add(browseScreen);
+        repaint();
+        printAll(getGraphics());
+    }
+    
+    public void gotoAccount() {
+        getContentPane().removeAll();
+        if (accountScreen == null) {
+            accountScreen = new JPanelAccount(listener);
+        }
+        getContentPane().add(accountScreen);
+        repaint();
+        printAll(getGraphics());
     }
 }
