@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package memorypro;
 
 import java.awt.Dimension;
@@ -9,28 +5,31 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Ярослав
+ * @author Ярослав, Jani Liikkanen
  */
 public class MemoryPro extends JFrame {
-
+    public static JFrame frameLogin;
+    public static JFrame frameMain;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
-        JFrame frame = new MemoryPro();
+        frameLogin = new MemoryPro();
+        frameMain = new MemoryPro();
         
-        System.out.println("Kay");
+        JPanelLogin loginScreen = new JPanelLogin();
+        JPanelMain mainScreen = new JPanelMain();
         
-        NewJPanel j = new NewJPanel();
-        //j.setSize(new Dimension(600, 800));
-        
-        frame.getContentPane().add(j);
+        frameLogin.getContentPane().add(loginScreen);
+        frameMain.getContentPane().add(mainScreen);
            
-        frame.setVisible(true);
-        frame.setSize(800, 600);
+        frameLogin.setVisible(true);
+        frameLogin.setSize(800, 600);
+        frameMain.setSize(800,600);
        
         
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
