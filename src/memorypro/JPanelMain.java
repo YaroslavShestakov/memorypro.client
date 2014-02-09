@@ -1,17 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package memorypro;
 
+import javax.swing.JFrame;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
+import memorypro.windows.NewNoteWindow;
 /**
  *
  * @author Jani Liikkanen
  */
 public class JPanelMain extends javax.swing.JPanel {
 
+    private boolean writingNote = false;
     /**
      * Creates new form JpanelMain
      */
@@ -36,6 +35,11 @@ public class JPanelMain extends javax.swing.JPanel {
         notePanel = new javax.swing.JPanel();
 
         btnAdd.setText("Add note");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnRemove.setText("Remove note");
 
@@ -101,6 +105,23 @@ public class JPanelMain extends javax.swing.JPanel {
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBrowseActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // Only allow for writing one note at a time.
+        if (!writingNote) {
+            writingNote = true;
+            NewNoteWindow noteWin = new NewNoteWindow();
+            JFrame noteFrame = new JFrame();
+            noteFrame.setSize(800,600);
+            noteFrame.getContentPane().add(noteWin);
+            noteFrame.setVisible(true);
+            noteFrame.addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    writingNote = false;
+                }
+            });
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
