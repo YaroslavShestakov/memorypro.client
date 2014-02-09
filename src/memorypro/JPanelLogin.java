@@ -128,7 +128,7 @@ public class JPanelLogin extends javax.swing.JPanel {
        String username = jTextUsername.getText();
        
         try {
-            URL url = new URL("http://localhost/mp/api/?action=login&email=" + username + "&password=" + pass);
+            URL url = new URL("http://koti.tamk.fi/~c2yshest/mp/api/?action=login&email=" + username + "&password=" + pass);
             URLConnection connection = url.openConnection();
             connection.connect();
 
