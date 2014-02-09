@@ -8,28 +8,41 @@ import javax.swing.JFrame;
  * @author Ярослав, Jani Liikkanen
  */
 public class MemoryPro extends JFrame {
-    public static JFrame frameLogin;
-    public static JFrame frameMain;
+//    public JFrame frame;
+//    public WindowListener listener;
+    JPanelLogin loginScreen;
+    JPanelMain mainScreen;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
-        frameLogin = new MemoryPro();
-        frameMain = new MemoryPro();
+        MemoryPro frame = new MemoryPro();
+    }
+    
+    public MemoryPro() {
+    
+        WindowListener listener = new WindowListener(this);
+        loginScreen = new JPanelLogin(listener);
         
-        JPanelLogin loginScreen = new JPanelLogin();
-        JPanelMain mainScreen = new JPanelMain();
-        
-        frameLogin.getContentPane().add(loginScreen);
-        frameMain.getContentPane().add(mainScreen);
+        getContentPane().add(loginScreen);
            
-        frameLogin.setVisible(true);
-        frameLogin.setSize(800, 600);
-        frameMain.setSize(800,600);
-       
+        setVisible(true);
+        setSize(800, 600);
         
-        frameLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    public void changeView(String view) {
+        if (view.equals("main")) {
+            getContentPane().remove(loginScreen);
+            if (mainScreen == null) {
+                mainScreen = new JPanelMain();
+                System.out.println("new main screen");
+            }
+            getContentPane().add(mainScreen);
+            repaint();
+            printAll(getGraphics());
+        }
     }
 }

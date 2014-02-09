@@ -8,16 +8,25 @@ import javax.swing.SwingUtilities;
  */
 public class WindowListener {
     public static WindowListener listener;
+    MemoryPro frame;
     
-    public WindowListener() {
+    public WindowListener(MemoryPro mp) {
+        frame = mp;
     }
     
-    public static void login() {
+    public void login() {
         System.out.println("WindowListener: login()");
-            MemoryPro.frameLogin.setVisible(false);
-            MemoryPro.frameMain.setVisible(true);
+//            MemoryPro.frameLogin.setVisible(false);
+//            MemoryPro.frameMain.setVisible(true);
+        
 //            MemoryPro.frameLogin.getContentPane().removeAll();
 //            JPanelMain newPanel = new JPanelMain();
+//            MemoryPro.frameLogin.getContentPane().add(newPanel);
+//            MemoryPro.frameLogin.repaint();
+        
+            frame.changeView("main");
+        
+//            MemoryPro.frameLogin.getContentPane().removeAll();
 //            MemoryPro.frameLogin.add(newPanel);
 //            MemoryPro.frameLogin.repaint();
     }

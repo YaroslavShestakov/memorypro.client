@@ -9,11 +9,12 @@ package memorypro;
  * @author Ярослав
  */
 public class JPanelLogin extends javax.swing.JPanel {
-
+    WindowListener listener;
     /**
      * Creates new form NewJPanel
      */
-    public JPanelLogin() {
+    public JPanelLogin(WindowListener wl) {
+        listener = wl;
         initComponents(); 
     }
 
@@ -106,7 +107,7 @@ public class JPanelLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        WindowListener.listener.login();
+        listener.login();
 //        System.out.println(WindowListener.listener);
     }//GEN-LAST:event_btnLoginActionPerformed
 
