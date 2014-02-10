@@ -6,7 +6,11 @@
 
 package memorypro.windows;
 
+import java.util.LinkedList;
+import javax.swing.JList;
 import memorypro.WindowListener;
+import memorypro.notes.Note;
+import memorypro.notes.NoteHandler;
 
 /**
  *
@@ -14,13 +18,16 @@ import memorypro.WindowListener;
  */
 public class JPanelBrowse extends javax.swing.JPanel {
     WindowListener listener;
+    NoteHandler noteHandler;
 
     /**
      * Creates new form JPanelBrowse
      */
-    public JPanelBrowse(WindowListener wl) {
+    public JPanelBrowse(WindowListener wl, NoteHandler nh) {
         listener = wl;
+        noteHandler = nh;
         initComponents();
+        initNotes();
     }
 
     /**
@@ -161,6 +168,37 @@ public class JPanelBrowse extends javax.swing.JPanel {
         listener.searchNote();
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void initNotes() {
+        LinkedList<String> listdata = new LinkedList<>();
+        for (int i = 0; i < noteHandler.size(); i++) {
+            Note tmp = noteHandler.get(i);
+            if (tmp != null) {
+                String noteString = "";
+                noteString += noteHandler.get(i).toString();
+                listdata.add(noteString);
+            }
+        }
+        
+        if (listdata.size() > 0) {
+            final String[] tmp = new String[listdata.size()];
+            for (int i = 0; i < listdata.size(); i++){
+                tmp[i] = listdata.get(i);
+            }
+            
+            noteList.setModel(new javax.swing.AbstractListModel() {
+                public int getSize() { return tmp.length; }
+                public Object getElementAt(int i) { return tmp[i]; }
+             });
+        }
+        
+        /*
+        noteList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        */
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

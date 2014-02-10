@@ -18,6 +18,7 @@ public class Note {
     public Note(String header, String message) {
         this.header = header;
         this.message = message;
+        date = new Date();
     }
     
     public String getHeader() {
@@ -34,5 +35,12 @@ public class Note {
     }
     public Date getDate() {
         return date;
+    }
+    public String toString() {
+        String strToReturn = header;
+        if (date.toString() != null){
+            strToReturn += " " +  date.toString();
+        }
+        return strToReturn;
     }
 }

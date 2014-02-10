@@ -9,6 +9,7 @@ public class NoteHandler {
     
     public NoteHandler() {
         notes = new LinkedList<Note>();
+        notes.add(new Note("asd", "asdasdasda"));
     }
     
     public void addNote(Note newNote) {
@@ -26,5 +27,18 @@ public class NoteHandler {
             return notesToReturn;
         }
         return null;
+    }
+    
+    public Note get(int index) {
+        if (index < notes.size()) {
+            return notes.get(index);
+        }
+        else {
+            return null;
+        }
+    }
+    
+    public int size() {
+        return notes.size();
     }
 }

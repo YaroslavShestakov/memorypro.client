@@ -70,7 +70,7 @@ public class MemoryPro extends JFrame {
     public void gotoBrowse() {
         getContentPane().removeAll();
         if (browseScreen == null) {
-            browseScreen = new JPanelBrowse(listener);
+            browseScreen = new JPanelBrowse(listener, noteHandler);
         }
         getContentPane().add(browseScreen);
         repaint();
