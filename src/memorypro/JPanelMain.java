@@ -1,21 +1,21 @@
 package memorypro;
 
-import javax.swing.JFrame;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
-import memorypro.windows.NewNoteWindow;
+import memorypro.notes.NoteHandler;
+
 /**
  *
  * @author Jani Liikkanen
  */
 public class JPanelMain extends javax.swing.JPanel {
     WindowListener listener;
+    NoteHandler noteHandler;
     private boolean writingNote = false;
     /**
      * Creates new form JpanelMain
      */
-    public JPanelMain(WindowListener wl) {
+    public JPanelMain(WindowListener wl, NoteHandler nh) {
         listener = wl;
+        noteHandler = nh;
         initComponents();
     }
 
@@ -74,6 +74,8 @@ public class JPanelMain extends javax.swing.JPanel {
                 btnAccountActionPerformed(evt);
             }
         });
+
+        notePanel.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
         notePanel.setLayout(notePanelLayout);

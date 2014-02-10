@@ -3,6 +3,7 @@ package memorypro;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import memorypro.windows.*;
+import memorypro.notes.*;
 
 /**
  *
@@ -16,6 +17,7 @@ public class MemoryPro extends JFrame {
     JPanelBrowse browseScreen;
     JPanelAccount accountScreen;
     WindowListener listener;
+    NoteHandler noteHandler;
     /**
      * @param args the command line arguments
      */
@@ -26,6 +28,7 @@ public class MemoryPro extends JFrame {
     
     public MemoryPro() {
     
+        noteHandler = new NoteHandler();
         listener = new WindowListener(this);
         loginScreen = new JPanelLogin(listener);
         
@@ -57,7 +60,7 @@ public class MemoryPro extends JFrame {
     public void gotoMain() {
         getContentPane().removeAll();
         if (mainScreen == null) {
-            mainScreen = new JPanelMain(listener);
+            mainScreen = new JPanelMain(listener, noteHandler);
         }
         getContentPane().add(mainScreen);
         repaint();

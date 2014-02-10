@@ -49,6 +49,12 @@ public class JPanelLogin extends javax.swing.JPanel {
             }
         });
 
+        jTextUsername.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextUsernameFocusLost(evt);
+            }
+        });
+
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,9 +98,8 @@ public class JPanelLogin extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
@@ -124,7 +129,9 @@ public class JPanelLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       String pass = String.valueOf(jTextPassword.getPassword());
+       /*
+        */
+        String pass = String.valueOf(jTextPassword.getPassword());
        String username = jTextUsername.getText();
        
         try {
@@ -151,9 +158,8 @@ public class JPanelLogin extends javax.swing.JPanel {
             e.printStackTrace();
             
         }
-
-        //listener.login();
-//        System.out.println(WindowListener.listener);
+        
+        listener.login();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
@@ -163,6 +169,10 @@ public class JPanelLogin extends javax.swing.JPanel {
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
         listener.showHelp("login");
     }//GEN-LAST:event_btnHelpActionPerformed
+
+    private void jTextUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextUsernameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextUsernameFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHelp;
