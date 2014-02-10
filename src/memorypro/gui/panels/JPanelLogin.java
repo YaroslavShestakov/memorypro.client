@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import memorypro.MemoryPro;
+import memorypro.gui.Window;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -21,6 +22,7 @@ public class JPanelLogin extends Panel {
     public JPanelLogin(MemoryPro app) {
         super(app);
         initComponents();
+        
     }
 
     /**
@@ -32,16 +34,16 @@ public class JPanelLogin extends Panel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextPassword = new javax.swing.JPasswordField();
-        jTextUsername = new javax.swing.JTextField();
+        password = new javax.swing.JPasswordField();
+        email = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnRegister = new javax.swing.JButton();
         btnHelp = new javax.swing.JButton();
 
-        jTextPassword.setPreferredSize(new java.awt.Dimension(100, 20));
-        jTextPassword.addActionListener(new java.awt.event.ActionListener() {
+        password.setPreferredSize(new java.awt.Dimension(100, 20));
+        password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
@@ -82,11 +84,11 @@ public class JPanelLogin extends Panel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -103,11 +105,11 @@ public class JPanelLogin extends Panel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jTextUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jTextPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(60, 60, 60)
                 .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
@@ -121,36 +123,10 @@ public class JPanelLogin extends Panel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       String pass = String.valueOf(jTextPassword.getPassword());
-       String username = jTextUsername.getText();
-       
-        try {
-            URL url = new URL("http://koti.tamk.fi/~c2yshest/mp/api/?action=login&email=" + username + "&password=" + pass);
-            URLConnection connection = url.openConnection();
-            connection.connect();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String result = "";
-            String inputLine;
-
-            while ((inputLine = in.readLine()) != null) {
-                result += inputLine ;
-            }
-
-            in.close();
-            
-            
-           System.out.println(result);
-            
-           //new JSONObject($
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            
+        if (app.login(email.getText(), String.valueOf(password.getPassword()))){         
+            app.gui.openWindow(Window.MAIN) ;
+            app.gui.closeWindow(Window.LOGIN);
         }
-
-        //listener.login();
-//        System.out.println(WindowListener.listener);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
@@ -165,9 +141,9 @@ public class JPanelLogin extends Panel {
     private javax.swing.JButton btnHelp;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
+    private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPasswordField jTextPassword;
-    private javax.swing.JTextField jTextUsername;
+    private javax.swing.JPasswordField password;
     // End of variables declaration//GEN-END:variables
 }

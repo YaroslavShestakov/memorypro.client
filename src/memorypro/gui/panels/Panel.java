@@ -12,7 +12,9 @@ import memorypro.MemoryPro;
  * @author c2yshest
  */
 public class Panel extends JPanel {
+    public MemoryPro app ;
+    
     public Panel(MemoryPro app){
-       
+       this.app = app ;
     }
 }

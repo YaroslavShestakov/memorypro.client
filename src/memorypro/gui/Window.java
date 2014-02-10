@@ -16,8 +16,9 @@ public class Window extends JFrame {
     public Integer type ;
     
     public Window(){
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+           
     }
     
     public Window(Integer type){

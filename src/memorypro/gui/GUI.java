@@ -2,11 +2,13 @@ package memorypro.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import memorypro.Display;
 import memorypro.MemoryPro;
@@ -39,7 +41,7 @@ public class GUI {
             
             return existing ;
         } else {
-            Window window = new Window();
+            final Window window = new Window();
            
             
             boolean found = false ;
@@ -50,13 +52,30 @@ public class GUI {
                 found = true ;
                 width  = 800 ;
                 height = 600 ;
-                window.setVisible(true);
+                //window.setVisible(true);
                          
                 JPanel j = new JPanelLogin(app);
                 window.getContentPane().add(j);
+
+            } else if (type == Window.MAIN){
+                found = true ;
+                width = 800 ;
+                height = 600 ;
+                //window.setVisible(true);
+                
+                JPanel j = new JPanelMain(app);
+                window.getContentPane().add(j);
             }
             
-            if (found){ 
+            if (found){                 
+                window.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        //int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                        GUI.this.closeWindow(window);
+                    }
+                });
+                
                 window.setType(type);
                 
                 window.setSize(width, height);          
@@ -66,6 +85,7 @@ public class GUI {
                 );
                 window.repaint();
                 window.printAll(window.getGraphics());  
+                window.setVisible(true);
                                 
                 windows.put(type, window);
                 
@@ -78,12 +98,15 @@ public class GUI {
     public void closeWindow(Integer type){
         if (windows.containsKey(type)){
             Window window = windows.get(type);
-            window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+            //window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             window.setVisible(false);
             window.dispose();
             
             windows.remove(window);
         }
+        
+        if (windows.size() == 0)
+            app.exit();
     }
     
     public void closeWindow(Window window){
