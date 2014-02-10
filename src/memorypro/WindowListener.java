@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import memorypro.windows.NewNoteWindow;
 
@@ -48,6 +49,9 @@ public class WindowListener {
         switch(location) {
             case "login":
                 System.out.println("Help not yet implemented");
+                JOptionPane.showMessageDialog(frame,
+                        "You can register or log in here.",
+                        "Help", JOptionPane.PLAIN_MESSAGE);
                 break;
             default:
                 System.out.println("Help at " + location + " not yet implemented");
