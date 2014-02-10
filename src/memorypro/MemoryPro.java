@@ -1,86 +1,41 @@
 package memorypro;
 
+import memorypro.gui.panels.JPanelMain;
+import memorypro.gui.panels.JPanelLogin;
+import memorypro.gui.panels.JPanelBrowse;
+import memorypro.gui.panels.JPanelAccount;
+import memorypro.gui.GUI;
 import java.awt.Dimension;
 import javax.swing.JFrame;
-import memorypro.windows.*;
+import memorypro.gui.Window;
 
 /**
  *
  * @author Ярослав, Jani Liikkanen
  */
-public class MemoryPro extends JFrame {
-//    public JFrame frame;
-//    public WindowListener listener;
-    JPanelLogin loginScreen;
-    JPanelMain mainScreen;
-    JPanelBrowse browseScreen;
-    JPanelAccount accountScreen;
-    WindowListener listener;
+public class MemoryPro {
+    protected GUI gui ;
+    protected User user ;
+    protected String sid ;
+    protected Display display = new Display();
+    
+        
+    public MemoryPro(boolean useGUI) {
+        if (useGUI){
+            gui = new GUI(this);
+            gui.openWindow(Window.LOGIN);
+        }
+    }
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
-        MemoryPro frame = new MemoryPro();
+    public static void main(String[] args) {    
+        MemoryPro app = new MemoryPro(true);
     }
-    
-    public MemoryPro() {
-    
-        listener = new WindowListener(this);
-        loginScreen = new JPanelLogin(listener);
-        
-        getContentPane().add(loginScreen);
-           
-        setVisible(true);
-        setSize(800, 600);
-        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-    
-    public void changeView(String view) {
-        switch(view) {
-            case "main":
-                gotoMain();
-                break;
-            case "browse":
-                gotoBrowse();
-                break;
-            case "account":
-                gotoAccount();
-                break;
-            default:
-                System.out.println("Cannot find view " + view);
-                break;
-        }
-    }
-    
-    public void gotoMain() {
-        getContentPane().removeAll();
-        if (mainScreen == null) {
-            mainScreen = new JPanelMain(listener);
-        }
-        getContentPane().add(mainScreen);
-        repaint();
-        printAll(getGraphics());
-    }
-    
-    public void gotoBrowse() {
-        getContentPane().removeAll();
-        if (browseScreen == null) {
-            browseScreen = new JPanelBrowse(listener);
-        }
-        getContentPane().add(browseScreen);
-        repaint();
-        printAll(getGraphics());
-    }
-    
-    public void gotoAccount() {
-        getContentPane().removeAll();
-        if (accountScreen == null) {
-            accountScreen = new JPanelAccount(listener);
-        }
-        getContentPane().add(accountScreen);
-        repaint();
-        printAll(getGraphics());
-    }
+
 }
