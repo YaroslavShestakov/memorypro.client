@@ -65,6 +65,22 @@ public class GUI {
                 
                 JPanel j = new JPanelMain(app);
                 window.getContentPane().add(j);
+            } 
+            else if (type == Window.ADD_NOTE) {
+                found = true;
+                width = 800;
+                height = 600;
+                
+                JPanel j = new NewNoteWindow(app);
+                window.getContentPane().add(j);
+            }
+            else if (type == Window.BROWSE) {
+                found = true;
+                width = 800;
+                height = 600;
+                
+                JPanel j = new JPanelBrowse(app);
+                window.getContentPane().add(j);
             }
             
             if (found){                 

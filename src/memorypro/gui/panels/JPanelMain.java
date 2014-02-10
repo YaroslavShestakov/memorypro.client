@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import memorypro.MemoryPro;
+import memorypro.gui.Window;
 import memorypro.gui.panels.NewNoteWindow;
 /**
  *
@@ -123,15 +124,17 @@ public class JPanelMain extends Panel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void browseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseActionPerformed
-
+        app.gui.openWindow(Window.BROWSE);
+        app.gui.closeWindow(Window.MAIN);
     }//GEN-LAST:event_browseActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-
+        app.gui.openWindow(Window.ADD_NOTE);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
-
+        app.gui.openWindow(Window.ACCOUNT);
+        app.gui.closeWindow(Window.MAIN);
     }//GEN-LAST:event_btnAccountActionPerformed
 
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed

@@ -35,6 +35,8 @@ public class Window extends JFrame {
         LOGIN       = 0,
         MAIN        = 1,
         NOTES       = 3,
-        ADD_NOTE    = 4
+        ADD_NOTE    = 4,
+        ACCOUNT     = 5,
+        BROWSE      = 6
     ;
 }

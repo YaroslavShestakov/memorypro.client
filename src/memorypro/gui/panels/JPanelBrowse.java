@@ -7,6 +7,7 @@
 package memorypro.gui.panels;
 
 import memorypro.MemoryPro;
+import memorypro.gui.Window;
 
 /**
  *
@@ -137,11 +138,12 @@ public class JPanelBrowse extends Panel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-
+        app.gui.openWindow(Window.MAIN);
+        app.gui.closeWindow(Window.BROWSE);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-
+        app.gui.openWindow(Window.ADD_NOTE);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed

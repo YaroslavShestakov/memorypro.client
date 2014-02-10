@@ -7,6 +7,7 @@
 package memorypro.gui.panels;
 
 import memorypro.MemoryPro;
+import memorypro.gui.Window;
 
 /**
  *
@@ -185,7 +186,8 @@ public class JPanelAccount extends Panel {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-
+        app.gui.openWindow(Window.MAIN);
+        app.gui.closeWindow(Window.ACCOUNT);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
