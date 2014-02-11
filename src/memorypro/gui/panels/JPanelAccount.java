@@ -20,6 +20,8 @@ public class JPanelAccount extends Panel {
     public JPanelAccount(MemoryPro app) {
         super(app);
         initComponents();
+        btnSave.setEnabled(false);
+        btnEdit.setEnabled(true);
     }
 
     /**
@@ -186,6 +188,8 @@ public class JPanelAccount extends Panel {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        btnSave.setEnabled(false);
+        btnEdit.setEnabled(true);
         app.gui.openWindow(Window.MAIN);
         app.gui.closeWindow(Window.ACCOUNT);
     }//GEN-LAST:event_btnCancelActionPerformed

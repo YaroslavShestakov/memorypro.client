@@ -35,7 +35,8 @@ public class GUI {
                 @Override
                 public void run() {
                     existing.toFront();
-                    existing.repaint();    
+                    existing.repaint();
+                    existing.setVisible(true);
                 }
             });
             
@@ -80,6 +81,14 @@ public class GUI {
                 height = 600;
                 
                 JPanel j = new JPanelBrowse(app);
+                window.getContentPane().add(j);
+            }
+            else if (type == Window.ACCOUNT) {
+                found = true;
+                width = 800;
+                height = 600;
+                
+                JPanel j = new JPanelAccount(app);
                 window.getContentPane().add(j);
             }
             

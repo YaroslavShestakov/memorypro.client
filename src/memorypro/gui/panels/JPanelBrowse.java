@@ -17,6 +17,7 @@ public class JPanelBrowse extends Panel {
     public JPanelBrowse(MemoryPro app) {
         super(app);
         initComponents();
+        initList();
     }
 
     /**
@@ -158,6 +159,13 @@ public class JPanelBrowse extends Panel {
 
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void initList() {
+      //  noteList.setModel(new javax.swing.AbstractListModel() {
+      //      String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+      //      public int getSize() { return strings.length; }
+      //      public Object getElementAt(int i) { return strings[i]; }
+      //  });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
