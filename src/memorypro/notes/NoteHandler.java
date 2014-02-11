@@ -5,19 +5,20 @@ import java.util.LinkedList;
  * @author Jani Liikkanen
  */
 public class NoteHandler {
-    LinkedList<Note> notes;
+   private static LinkedList<Note> notes;
     
     public NoteHandler() {
-        notes = new LinkedList<Note>();
+        notes = new LinkedList<>();
         notes.add(new Note("asd", "asdasdasda"));
+        notes.add(new Note("asd2", "asdasdasda2"));
     }
     
-    public void addNote(Note newNote) {
+    public static void addNote(Note newNote) {
         notes.add(newNote);
     }
     
-    public LinkedList<Note> getNotesByHeader(String header) {
-        LinkedList<Note> notesToReturn = new LinkedList<Note>();
+    public static LinkedList<Note> getNotesByHeader(String header) {
+        LinkedList<Note> notesToReturn = new LinkedList<>();
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getHeader().equals(header)) {
                 notesToReturn.add(notes.get(i));
@@ -29,7 +30,7 @@ public class NoteHandler {
         return null;
     }
     
-    public Note get(int index) {
+    public static Note get(int index) {
         if (index < notes.size()) {
             return notes.get(index);
         }
@@ -38,7 +39,7 @@ public class NoteHandler {
         }
     }
     
-    public int size() {
+    public static int size() {
         return notes.size();
     }
 }

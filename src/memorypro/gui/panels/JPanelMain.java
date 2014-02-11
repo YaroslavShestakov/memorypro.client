@@ -1,11 +1,14 @@
 package memorypro.gui.panels;
 
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import memorypro.MemoryPro;
 import memorypro.gui.Window;
 import memorypro.gui.panels.NewNoteWindow;
+import memorypro.notes.Note;
+import memorypro.notes.NoteHandler;
 /**
  *
  * @author Jani Liikkanen
@@ -34,6 +37,7 @@ public class JPanelMain extends Panel {
         btnSettings = new javax.swing.JButton();
         btnAccount = new javax.swing.JButton();
         notePanel = new javax.swing.JPanel();
+        notesPanel = new javax.swing.JPanel();
 
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdd.setText("Add note");
@@ -75,15 +79,30 @@ public class JPanelMain extends Panel {
             }
         });
 
+        notesPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout notesPanelLayout = new javax.swing.GroupLayout(notesPanel);
+        notesPanel.setLayout(notesPanelLayout);
+        notesPanelLayout.setHorizontalGroup(
+            notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 649, Short.MAX_VALUE)
+        );
+        notesPanelLayout.setVerticalGroup(
+            notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
         notePanel.setLayout(notePanelLayout);
         notePanelLayout.setHorizontalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGroup(notePanelLayout.createSequentialGroup()
+                .addComponent(notesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         notePanelLayout.setVerticalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(notesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -153,5 +172,6 @@ public class JPanelMain extends Panel {
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSettings;
     private javax.swing.JPanel notePanel;
+    private javax.swing.JPanel notesPanel;
     // End of variables declaration//GEN-END:variables
 }

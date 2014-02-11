@@ -6,16 +6,21 @@
 
 package memorypro.gui.panels;
 
+import javax.swing.DefaultListModel;
 import memorypro.MemoryPro;
 import memorypro.gui.Window;
+import memorypro.notes.Note;
+import memorypro.notes.NoteHandler;
 
 /**
  *
  * @author Jani
  */
 public class JPanelBrowse extends Panel {
+    private static DefaultListModel listModel;
     public JPanelBrowse(MemoryPro app) {
         super(app);
+        listModel = new DefaultListModel();
         initComponents();
         initList();
     }
@@ -72,11 +77,7 @@ public class JPanelBrowse extends Panel {
         });
 
         noteList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        noteList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        noteList.setToolTipText("");
         jScrollPane1.setViewportView(noteList);
 
         fieldSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -160,11 +161,30 @@ public class JPanelBrowse extends Panel {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void initList() {
-      //  noteList.setModel(new javax.swing.AbstractListModel() {
-      //      String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-      //      public int getSize() { return strings.length; }
-      //      public Object getElementAt(int i) { return strings[i]; }
-      //  });
+        final String[] notes = new String[NoteHandler.size()];
+        for (int i = 0; i < NoteHandler.size(); i++) {
+            notes[i] = ((Note)NoteHandler.get(i)).toString();
+        }
+        
+        noteList.setModel(new javax.swing.AbstractListModel() {
+            public int getSize() { return notes.length; }
+            public Object getElementAt(int i) { return notes[i]; }
+        });
+        
+    }
+    
+    public static void updateList() {
+        
+        final String[] notes = new String[NoteHandler.size()];
+        for (int i = 0; i < NoteHandler.size(); i++) {
+            notes[i] = ((Note)NoteHandler.get(i)).toString();
+        }
+        
+        noteList.setModel(new javax.swing.AbstractListModel() {
+            public int getSize() { return notes.length; }
+            public Object getElementAt(int i) { return notes[i]; }
+        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -176,6 +196,6 @@ public class JPanelBrowse extends Panel {
     private javax.swing.JTextField fieldSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList noteList;
+    private static javax.swing.JList noteList;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import memorypro.MemoryPro;
+import memorypro.notes.*;
 
 /**
  *
@@ -198,6 +199,9 @@ public class NewNoteWindow extends Panel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        jTextHeader.setText("");
+        jTextMessage.setText("");
+        
         Component myComp = (Component) evt.getSource();
         JFrame frame = (JFrame) SwingUtilities.getRoot(myComp);
         frame.setName("");
@@ -205,7 +209,18 @@ public class NewNoteWindow extends Panel {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-
+        String header = jTextHeader.getText();
+        String message = jTextMessage.getText();
+        if (!(header.equals("") || message.equals(""))) {
+            NoteHandler.addNote(new Note(header, message));
+            JPanelBrowse.updateList();
+            
+            jTextHeader.setText("");
+            jTextMessage.setText("");
+        }
+        else {
+            System.out.println("NewNoteWindow: btnSaveActionPerformed: Can't add note!");
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed

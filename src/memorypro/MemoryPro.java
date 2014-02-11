@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import javax.swing.JFrame;
 import memorypro.gui.Window;
+import memorypro.notes.NoteHandler;
 
 /**
  *
@@ -28,6 +29,7 @@ public class MemoryPro {
     
         
     public MemoryPro(boolean useGUI) {
+        NoteHandler nh = new NoteHandler();
         if (useGUI){
             gui = new GUI(this);
             gui.openWindow(Window.LOGIN);

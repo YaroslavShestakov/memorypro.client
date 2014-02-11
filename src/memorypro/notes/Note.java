@@ -38,8 +38,9 @@ public class Note {
     }
     public String toString() {
         String strToReturn = header;
+        strToReturn += " - " + message;
         if (date.toString() != null){
-            strToReturn += " " +  date.toString();
+            strToReturn += " - " +  date.toString();
         }
         return strToReturn;
     }
