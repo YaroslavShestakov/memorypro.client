@@ -18,12 +18,22 @@ import memorypro.notes.*;
  * @author Jani
  */
 public class NewNoteWindow extends Panel {
+    private boolean newNote;
+    private Note selectedNote;
     /**
      * Creates new form NewNoteWindow
      */
     public NewNoteWindow(MemoryPro app) {
         super(app);
         initComponents();
+        newNote = true;
+    }
+    
+    public NewNoteWindow(MemoryPro app, Note selected) {
+        super(app);
+        initComponents();
+        newNote = false;
+        this.selectedNote = selected;
     }
 
     /**
@@ -202,6 +212,7 @@ public class NewNoteWindow extends Panel {
         jTextHeader.setText("");
         jTextMessage.setText("");
         
+        selectedNote = null;
         Component myComp = (Component) evt.getSource();
         JFrame frame = (JFrame) SwingUtilities.getRoot(myComp);
         frame.setName("");
@@ -212,7 +223,13 @@ public class NewNoteWindow extends Panel {
         String header = jTextHeader.getText();
         String message = jTextMessage.getText();
         if (!(header.equals("") || message.equals(""))) {
-            NoteHandler.addNote(new Note(header, message));
+            if (newNote) {
+                NoteHandler.addNote(new Note(header, message));
+            }
+            else {
+                selectedNote.setHeader(header);
+                selectedNote.setMessage(message);
+            }
             JPanelBrowse.updateList();
             
             jTextHeader.setText("");

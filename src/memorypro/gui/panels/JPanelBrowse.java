@@ -7,10 +7,12 @@
 package memorypro.gui.panels;
 
 import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionListener;
 import memorypro.MemoryPro;
 import memorypro.gui.Window;
 import memorypro.notes.Note;
 import memorypro.notes.NoteHandler;
+import memorypro.gui.panels.list.ListListener;
 
 /**
  *
@@ -18,6 +20,8 @@ import memorypro.notes.NoteHandler;
  */
 public class JPanelBrowse extends Panel {
     private static DefaultListModel listModel;
+    private ListListener listListener;
+    private static Note selectedNote;
     public JPanelBrowse(MemoryPro app) {
         super(app);
         listModel = new DefaultListModel();
@@ -149,7 +153,9 @@ public class JPanelBrowse extends Panel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-
+        System.out.println(noteList.getSelectedValue().getClass()); 
+        selectedNote = (Note) noteList.getSelectedValue();
+        app.gui.openWindow(Window.EDIT_NOTE);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -161,9 +167,27 @@ public class JPanelBrowse extends Panel {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void initList() {
-        final String[] notes = new String[NoteHandler.size()];
+        
+        final Note[] notes = new Note[NoteHandler.size()];
         for (int i = 0; i < NoteHandler.size(); i++) {
-            notes[i] = ((Note)NoteHandler.get(i)).toString();
+            notes[i] = NoteHandler.get(i);
+        }
+        
+        noteList.setModel(new javax.swing.AbstractListModel() {
+            public int getSize() { return notes.length; }
+            public Object getElementAt(int i) { return notes[i]; }
+        });
+        
+        listListener = new ListListener(noteList, this);
+        noteList.addListSelectionListener(listListener);
+        
+    }
+    
+    public static void updateList() {
+        
+        final Note[] notes = new Note[NoteHandler.size()];
+        for (int i = 0; i < NoteHandler.size(); i++) {
+            notes[i] = NoteHandler.get(i);
         }
         
         noteList.setModel(new javax.swing.AbstractListModel() {
@@ -173,18 +197,12 @@ public class JPanelBrowse extends Panel {
         
     }
     
-    public static void updateList() {
-        
-        final String[] notes = new String[NoteHandler.size()];
-        for (int i = 0; i < NoteHandler.size(); i++) {
-            notes[i] = ((Note)NoteHandler.get(i)).toString();
-        }
-        
-        noteList.setModel(new javax.swing.AbstractListModel() {
-            public int getSize() { return notes.length; }
-            public Object getElementAt(int i) { return notes[i]; }
-        });
-        
+    public void setEditBtn(boolean active) {
+        btnEdit.setEnabled(active);
+    }
+    
+    public static Note getSelected() {
+        return selectedNote;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
