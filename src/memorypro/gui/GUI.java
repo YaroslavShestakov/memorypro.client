@@ -43,6 +43,8 @@ public class GUI {
             return existing ;
         } else {
             final Window window = new Window();
+            Panel panel = null ;
+            Dimension ps = null ;
            
             
             boolean found = false ;
@@ -51,12 +53,9 @@ public class GUI {
             
             if (type == Window.LOGIN){
                 found = true ;
-                width  = 800 ;
-                height = 600 ;
-                //window.setVisible(true);
-                         
-                JPanel j = new JPanelLogin(app);
-                window.getContentPane().add(j);
+
+                panel = new JPanelLogin(app);
+                window.getContentPane().add(panel);
 
             } else if (type == Window.MAIN){
                 found = true ;
@@ -103,16 +102,22 @@ public class GUI {
                 
                 window.setType(type);
                 
-                window.setSize(width, height);          
+                
+                window.pack(); //AUTORESIZING
+                
                 window.setLocation(
-                        Display.width/2-width/2, 
-                        Display.height/2-height/2
+                        Display.width/2-window.getWidth() / 2, 
+                        Display.height/2-window.getHeight() /2
                 );
                 window.repaint();
                 window.printAll(window.getGraphics());  
                 window.setVisible(true);
                                 
                 windows.put(type, window);
+                
+                
+                width = window.getComponent(0).getPreferredSize().width ;
+                System.out.println(width);
                 
                 return window ;
             }
@@ -128,10 +133,13 @@ public class GUI {
             window.dispose();
             
             windows.remove(window);
+            
+                    
+            if (windows.size() == 0){
+                System.out.println("All windows closed, terminating.");
+                app.exit();
+            }
         }
-        
-        if (windows.size() == 0)
-            app.exit();
     }
     
     public void closeWindow(Window window){

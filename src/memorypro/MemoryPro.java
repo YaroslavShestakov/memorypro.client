@@ -14,7 +14,7 @@ import java.net.URLConnection;
 import javax.swing.JFrame;
 import memorypro.gui.Window;
 import memorypro.notes.NoteHandler;
-
+import org.json.JSONObject;
 /**
  *
  * @author Ярослав, Jani Liikkanen
@@ -22,7 +22,7 @@ import memorypro.notes.NoteHandler;
 public class MemoryPro {
     public GUI gui ;
     protected User user ;
-    protected String sid ;
+    protected String sid = null ;
     protected Display display = new Display();
     
     private String server = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
@@ -38,22 +38,42 @@ public class MemoryPro {
     
     public boolean login(String email, String password){
         try {
-            String query = "?email="+email+"&password="+password ;
+            String query = "?action=login&email="+email+"&password="+password ;
             URL url = new URL(server + query);
             URLConnection connection = url.openConnection();
             connection.connect();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String result = "";
+            String json = "";
             String inputLine;
 
             while ((inputLine = in.readLine()) != null) {
-                result += inputLine ;
+                json += inputLine ;
             }
 
             in.close();
             
-            return true ;
+            @SuppressWarnings("null")
+            JSONObject response = new JSONObject(json);
+            
+            String sid = response.getString("sid");
+            Boolean status = response.getBoolean("status");
+
+            
+            if (status){
+                this.user = new User();
+                JSONObject data = response.getJSONObject("data");
+                
+                this.user.id = data.getInt("id");
+                this.user.firstname = data.getString("firstname");
+                this.user.lastname = data.getString("lastname");
+                
+                this.user.email = email;
+                this.user.password = password;
+                
+                this.sid = sid ;
+                return true ;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             
@@ -65,6 +85,10 @@ public class MemoryPro {
         System.exit(0);
     }
     
+    public void print(Object o){
+        System.out.println(o);
+    }
+    
     
     
     
@@ -74,6 +98,11 @@ public class MemoryPro {
      */
     public static void main(String[] args) {    
         MemoryPro app = new MemoryPro(true);
+    }
+
+    public void logout() {
+        this.user = new User();
+        this.sid = null ;
     }
 
 }
