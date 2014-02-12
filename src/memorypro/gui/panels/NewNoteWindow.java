@@ -7,14 +7,13 @@
 package memorypro.gui.panels;
 
 import java.awt.Component;
-import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import memorypro.MemoryPro;
 import memorypro.notes.*;
 
 /**
- *
+ * Window used for making new notes, or editing old ones.
  * @author Jani
  */
 public class NewNoteWindow extends Panel {
@@ -22,6 +21,7 @@ public class NewNoteWindow extends Panel {
     private Note selectedNote;
     /**
      * Creates new form NewNoteWindow
+     * @param app The main program.
      */
     public NewNoteWindow(MemoryPro app) {
         super(app);
@@ -208,6 +208,10 @@ public class NewNoteWindow extends Panel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Cancel editing, or adding new note. Returns to previous screen.
+     * @param evt @see java.awt.event.ActionEvent
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         jTextHeader.setText("");
         jTextMessage.setText("");

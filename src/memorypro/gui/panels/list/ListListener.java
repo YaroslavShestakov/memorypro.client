@@ -21,6 +21,11 @@ public class ListListener implements ListSelectionListener {
     private JList list;
     private JPanel parent;
     
+    /**
+     * Constructor for a listener class.
+     * @param list The list that's being listened.
+     * @param parent The panel where the list is in.
+     */
     public ListListener(JList list, JPanel parent) {
         this.parent = parent;
         this.list = list;

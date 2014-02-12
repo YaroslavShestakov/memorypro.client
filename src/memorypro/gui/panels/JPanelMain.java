@@ -1,14 +1,7 @@
 package memorypro.gui.panels;
 
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
 import memorypro.MemoryPro;
 import memorypro.gui.Window;
-import memorypro.gui.panels.NewNoteWindow;
-import memorypro.notes.Note;
-import memorypro.notes.NoteHandler;
 /**
  *
  * @author Jani Liikkanen
@@ -16,6 +9,7 @@ import memorypro.notes.NoteHandler;
 public class JPanelMain extends Panel {
     /**
      * Creates new form JpanelMain
+     * @param app   The main program.
      */
     public JPanelMain(MemoryPro app) {
         super(app);

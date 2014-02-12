@@ -7,7 +7,6 @@
 package memorypro.gui.panels;
 
 import javax.swing.DefaultListModel;
-import javax.swing.event.ListSelectionListener;
 import memorypro.MemoryPro;
 import memorypro.gui.Window;
 import memorypro.notes.Note;
@@ -166,8 +165,10 @@ public class JPanelBrowse extends Panel {
 
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    /**
+     * Initialize the list of notes.
+     */
     private void initList() {
-        
         final Note[] notes = new Note[NoteHandler.size()];
         for (int i = 0; i < NoteHandler.size(); i++) {
             notes[i] = NoteHandler.get(i);
@@ -183,6 +184,9 @@ public class JPanelBrowse extends Panel {
         
     }
     
+    /**
+     * Update the list containing notes.
+     */
     public static void updateList() {
         
         final Note[] notes = new Note[NoteHandler.size()];
@@ -197,10 +201,18 @@ public class JPanelBrowse extends Panel {
         
     }
     
+    /**
+     * Enable or disable the edit button, depending if a note is selected.
+     * @param active State of the edit button.
+     */
     public void setEditBtn(boolean active) {
         btnEdit.setEnabled(active);
     }
     
+    /**
+     * Returns the selected note.
+     * @return Note selected from the list.
+     */
     public static Note getSelected() {
         return selectedNote;
     }
