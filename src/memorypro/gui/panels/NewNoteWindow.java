@@ -8,6 +8,7 @@ package memorypro.gui.panels;
 
 import java.awt.Component;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import memorypro.MemoryPro;
 import memorypro.notes.*;
@@ -231,6 +232,7 @@ public class NewNoteWindow extends Panel {
                 NoteHandler.addNote(new Note(header, message));
             }
             else {
+                selectedNote = JPanelBrowse.getSelected();
                 selectedNote.setHeader(header);
                 selectedNote.setMessage(message);
             }
@@ -240,7 +242,10 @@ public class NewNoteWindow extends Panel {
             jTextMessage.setText("");
         }
         else {
-            System.out.println("NewNoteWindow: btnSaveActionPerformed: Can't add note!");
+            System.out.println("NewNoteWindow: btnSaveActionPerformed:"
+                    + " Can't add note!");
+            String errorMessage = "Notes require a header and a message";
+            JOptionPane.showMessageDialog(this, errorMessage);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
