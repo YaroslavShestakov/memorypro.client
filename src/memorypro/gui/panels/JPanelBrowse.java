@@ -178,8 +178,8 @@ public class JPanelBrowse extends Panel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String searchString = fieldSearch.getText();
         LinkedList<Note> foundNotes = NoteHandler.getNotesByHeader(searchString);
-        changeList(foundNotes);
-        System.out.println("searchAction");
+        if (foundNotes != null)
+            changeList(foundNotes);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnShowAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowAllActionPerformed
