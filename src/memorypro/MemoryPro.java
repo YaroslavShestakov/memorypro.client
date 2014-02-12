@@ -21,6 +21,8 @@ import org.json.JSONObject;
  */
 public class MemoryPro {
     public GUI gui ;
+    public ErrorHandler errhandler = new ErrorHandler();
+    
     protected User user ;
     protected String sid = null ;
     protected Display display = new Display();
@@ -73,11 +75,18 @@ public class MemoryPro {
                 
                 this.sid = sid ;
                 return true ;
+            } else {
+                errhandler.setLastError("login", Error.WRONG_CREDENTIALS);
+                return false ;
             }
         } catch (Exception e) {
             e.printStackTrace();
             
+            errhandler.setLastError("login", Error.NO_CONNECTION);
+            //return false ;
         }
+        
+        //errhandler.setLastError("login", Error.UNKNOWN);
         return false;
     }
     
@@ -104,5 +113,4 @@ public class MemoryPro {
         this.user = new User();
         this.sid = null ;
     }
-
 }

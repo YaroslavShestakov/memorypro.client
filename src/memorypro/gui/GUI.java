@@ -57,7 +57,7 @@ public class GUI {
 
                 panel = new JPanelLogin(app);
                 window.getContentPane().add(panel);
-
+                window.setTitle("MemoryPro [login page]");
             } else if (type == Window.MAIN){
                 found = true ;
                 width = 800 ;
@@ -123,10 +123,6 @@ public class GUI {
                 window.setVisible(true);
                                 
                 windows.put(type, window);
-                
-                
-                width = window.getComponent(0).getPreferredSize().width ;
-                System.out.println(width);
                 
                 return window ;
             }
