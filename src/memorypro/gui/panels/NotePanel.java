@@ -19,6 +19,7 @@ public class NotePanel extends javax.swing.JPanel {
     private Image image = null;
     /**
      * Creates new form NotePanel
+     * @param nh NoteHandler that contains a list of all the Note objects.
      */
     public NotePanel(NoteHandler nh) {
         noteHandler = nh;

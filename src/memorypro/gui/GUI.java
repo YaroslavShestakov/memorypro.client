@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import memorypro.Display;
+import memorypro.notes.*;
 import memorypro.MemoryPro;
 import memorypro.gui.panels.* ;
 
@@ -88,6 +89,14 @@ public class GUI {
                 height = 600;
                 
                 JPanel j = new JPanelAccount(app);
+                window.getContentPane().add(j);
+            }
+            else if (type == Window.EDIT_NOTE) {
+                found = true;
+                width = 800;
+                height = 600;
+                
+                JPanel j = new NewNoteWindow(app, JPanelBrowse.getSelected());
                 window.getContentPane().add(j);
             }
             

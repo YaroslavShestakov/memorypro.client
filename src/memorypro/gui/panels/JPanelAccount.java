@@ -16,6 +16,7 @@ import memorypro.gui.Window;
 public class JPanelAccount extends Panel {
     /**
      * Creates new form JPanelAccount
+     * @param app The main program.
      */
     public JPanelAccount(MemoryPro app) {
         super(app);
@@ -175,6 +176,10 @@ public class JPanelAccount extends Panel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Disables all textfields from editing.
+     * @param evt Java ActionEvent.
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         fieldEmail.setEditable(false);
         fieldPassword.setEditable(false);
@@ -187,6 +192,10 @@ public class JPanelAccount extends Panel {
         btnEdit.setEnabled(true);
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    /**
+     * Returns to previous screen.
+     * @param evt @see java.awt.event.ActionEvent
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         btnSave.setEnabled(false);
         btnEdit.setEnabled(true);
@@ -194,6 +203,10 @@ public class JPanelAccount extends Panel {
         app.gui.closeWindow(Window.ACCOUNT);
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    /**
+     * Enables all textfields for editing.
+     * @param evt @see java.awt.event.ActionEvent
+     */
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         fieldEmail.setEditable(true);
         fieldPassword.setEditable(true);

@@ -7,23 +7,34 @@
 package memorypro.gui.panels;
 
 import java.awt.Component;
-import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import memorypro.MemoryPro;
 import memorypro.notes.*;
 
 /**
- *
+ * Window used for making new notes, or editing old ones.
  * @author Jani
  */
 public class NewNoteWindow extends Panel {
+    private boolean newNote;
+    private Note selectedNote;
     /**
      * Creates new form NewNoteWindow
+     * @param app The main program.
      */
     public NewNoteWindow(MemoryPro app) {
         super(app);
         initComponents();
+        newNote = true;
+    }
+    
+    public NewNoteWindow(MemoryPro app, Note selected) {
+        super(app);
+        initComponents();
+        newNote = false;
+        this.selectedNote = selected;
     }
 
     /**
@@ -198,10 +209,15 @@ public class NewNoteWindow extends Panel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Cancel editing, or adding new note. Returns to previous screen.
+     * @param evt @see java.awt.event.ActionEvent
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         jTextHeader.setText("");
         jTextMessage.setText("");
         
+        selectedNote = null;
         Component myComp = (Component) evt.getSource();
         JFrame frame = (JFrame) SwingUtilities.getRoot(myComp);
         frame.setName("");
@@ -212,14 +228,24 @@ public class NewNoteWindow extends Panel {
         String header = jTextHeader.getText();
         String message = jTextMessage.getText();
         if (!(header.equals("") || message.equals(""))) {
-            NoteHandler.addNote(new Note(header, message));
+            if (newNote) {
+                NoteHandler.addNote(new Note(header, message));
+            }
+            else {
+                selectedNote = JPanelBrowse.getSelected();
+                selectedNote.setHeader(header);
+                selectedNote.setMessage(message);
+            }
             JPanelBrowse.updateList();
             
             jTextHeader.setText("");
             jTextMessage.setText("");
         }
         else {
-            System.out.println("NewNoteWindow: btnSaveActionPerformed: Can't add note!");
+            System.out.println("NewNoteWindow: btnSaveActionPerformed:"
+                    + " Can't add note!");
+            String errorMessage = "Notes require a header and a message";
+            JOptionPane.showMessageDialog(this, errorMessage);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
