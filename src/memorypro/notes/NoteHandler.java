@@ -32,7 +32,8 @@ public class NoteHandler {
     public static LinkedList<Note> getNotesByHeader(String header) {
         LinkedList<Note> notesToReturn = new LinkedList<>();
         for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getHeader().equals(header)) {
+            if (notes.get(i).getHeader().toLowerCase().contains(header.toLowerCase())) {
+//            if (notes.get(i).getHeader().equals(header)) {
                 notesToReturn.add(notes.get(i));
             }
         }
