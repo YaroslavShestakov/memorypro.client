@@ -1,19 +1,9 @@
 package memorypro.gui;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import memorypro.gui.windows.* ;
 import java.util.HashMap;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import memorypro.Display;
-import memorypro.notes.*;
 import memorypro.MemoryPro;
-import memorypro.gui.panels.* ;
 
 /**
  *
@@ -43,91 +33,25 @@ public class GUI {
             
             return existing ;
         } else {
-            final Window window = new Window();
-            Panel panel = null ;
-            Dimension ps = null ;
-           
-            
-            boolean found = false ;
-            int width  = 800 ;
-            int height = 600 ;
+            Window window = null ;
             
             if (type == Window.LOGIN){
-                found = true ;
-
-                panel = new JPanelLogin(app);
-                window.getContentPane().add(panel);
-                window.setTitle("MemoryPro [login page]");
+                window = new LoginWindow();
+                window.setResizable(false);
+                window.setTitle("MemoryPro [login]");
             } else if (type == Window.MAIN){
-                found = true ;
-                width = 800 ;
-                height = 600 ;
-                //window.setVisible(true);
-                
-                JPanel j = new JPanelMain(app);
-                window.getContentPane().add(j);
-            } 
-            else if (type == Window.ADD_NOTE) {
-                found = true;
-                width = 800;
-                height = 600;
-                
-                JPanel j = new NewNoteWindow(app);
-                window.getContentPane().add(j);
-            }
-            else if (type == Window.BROWSE) {
-                found = true;
-                width = 800;
-                height = 600;
-                
-                JPanel j = new JPanelBrowse(app);
-                window.getContentPane().add(j);
-            }
-            else if (type == Window.ACCOUNT) {
-                found = true;
-                width = 800;
-                height = 600;
-                
-                JPanel j = new JPanelAccount(app);
-                window.getContentPane().add(j);
-            }
-            else if (type == Window.EDIT_NOTE) {
-                found = true;
-                width = 800;
-                height = 600;
-                
-                JPanel j = new NewNoteWindow(app, JPanelBrowse.getSelected());
-                window.getContentPane().add(j);
+                window = new MainWindow(app);
+                window.setTitle("Welcome to MemoryPro");
+            } else if (type == Window.NEW_NOTE){
+                window = new NewNoteWindow(app);
+                window.setTitle("MemoryPro [new note]");
             }
             
-            if (found){                 
-                window.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e) {
-                        //int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                        GUI.this.closeWindow(window);
-                    }
-                });
+            if (window != null)
+                this.setupNewWindow(window, type);
                 
-                window.setType(type);
-                
-                
-                window.pack(); //AUTORESIZING
-                
-                window.setLocation(
-                        Display.width/2-window.getWidth() / 2, 
-                        Display.height/2-window.getHeight() /2
-                );
-                window.repaint();
-                window.printAll(window.getGraphics());  
-                window.setVisible(true);
-                                
-                windows.put(type, window);
-                
-                return window ;
-            }
+            return window ;
         }
-        return null ;
     }
     
     public void closeWindow(Integer type){
@@ -148,6 +72,22 @@ public class GUI {
     }
     
     public void closeWindow(Window window){
-            this.closeWindow(window.type);
+        this.closeWindow(window.type);
+    }
+    
+        private void setupNewWindow(Window window, Integer type){
+        window.setApp(this.app);
+        window.setType(type);
+
+        window.pack(); //AUTORESIZING
+        window.setLocation(
+            Display.width/2-window.getWidth() / 2, 
+            Display.height/2-window.getHeight() /2
+         );
+        window.repaint();
+        window.printAll(window.getGraphics());  
+        window.setVisible(true);
+                                
+       windows.put(type, window);
     }
 }

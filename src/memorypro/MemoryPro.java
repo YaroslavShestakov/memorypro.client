@@ -1,18 +1,11 @@
 package memorypro;
 
-import memorypro.gui.panels.JPanelMain;
-import memorypro.gui.panels.JPanelLogin;
-import memorypro.gui.panels.JPanelBrowse;
-import memorypro.gui.panels.JPanelAccount;
 import memorypro.gui.GUI;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import javax.swing.JFrame;
-import memorypro.gui.Window;
+import memorypro.gui.windows.Window;
 import memorypro.notes.NoteHandler;
 import org.json.JSONObject;
 /**
@@ -22,6 +15,7 @@ import org.json.JSONObject;
 public class MemoryPro {
     public GUI gui ;
     public ErrorHandler errhandler = new ErrorHandler();
+    public NoteHandler notehandler = new NoteHandler();
     
     protected User user ;
     protected String sid = null ;

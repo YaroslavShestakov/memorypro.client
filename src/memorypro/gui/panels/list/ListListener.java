@@ -10,7 +10,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import memorypro.gui.panels.JPanelBrowse;
+/*import memorypro.gui.panels.JPanelBrowse;*/
 
 /**
  *
@@ -29,19 +29,19 @@ public class ListListener implements ListSelectionListener {
     public ListListener(JList list, JPanel parent) {
         this.parent = parent;
         this.list = list;
-        if (list.getSelectedIndex() == -1) {
+        /*if (list.getSelectedIndex() == -1) {
             ((JPanelBrowse) parent).setEditBtn(false);
-        }
+        }*/
     }
     
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (list.getSelectedIndex() == -1) {
+        /*if (list.getSelectedIndex() == -1) {
             ((JPanelBrowse) parent).setEditBtn(false);
         }
         else {
             ((JPanelBrowse) parent).setEditBtn(true);
-        }
+        }*/
     }
     
 }

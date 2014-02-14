@@ -1,27 +1,30 @@
 package memorypro.notes;
-import java.util.LinkedList;
+import java.util.*;
 /**
  * Class for handling note objects.
  * @author Jani Liikkanen
  */
 public class NoteHandler {
-   private static LinkedList<Note> notes;
+   private ArrayList<Note> notes = new ArrayList();
     
    /**
     * Constructor for the NoteHandler.
     */
     public NoteHandler() {
-        notes = new LinkedList<>();
-        notes.add(new Note("asd", "asdasdasda"));
-        notes.add(new Note("asd2", "asdasdasda2"));
+        notes.add(new Note("Wash dishes", "Carefully wash dishes"));
+        notes.add(new Note("Make food", "Make some delicious food before guests arrive at 17.00"));
     }
     
     /**
      * Adds a new note into the note list.
      * @param newNote Note that is added into the list.
      */
-    public static void addNote(Note newNote) {
+    public void addNote(Note newNote) {
         notes.add(newNote);
+    }
+    
+    public ArrayList getNotes(){
+        return this.notes ;
     }
     
     /**
@@ -29,7 +32,7 @@ public class NoteHandler {
      * @param header Header that is searched from the list.
      * @return List with notes whose header matches the search string.
      */
-    public static LinkedList<Note> getNotesByHeader(String header) {
+    /*public static LinkedList<Note> getNotesByHeader(String header) {
         LinkedList<Note> notesToReturn = new LinkedList<>();
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getHeader().toLowerCase().contains(header.toLowerCase())) {
@@ -48,20 +51,20 @@ public class NoteHandler {
      * @param index Index of the note wanted.
      * @return Note from a certain index.
      */
-    public static Note get(int index) {
+    /*public static Note get(int index) {
         if (index < notes.size()) {
             return notes.get(index);
         }
         else {
             return null;
         }
-    }
+    }*/
     
     /**
      * Returns the size of the note list.
      * @return Size of the note list.
      */
-    public static int size() {
+    /*public static int size() {
         return notes.size();
-    }
+    }*/
 }

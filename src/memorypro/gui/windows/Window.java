@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package memorypro.gui;
+package memorypro.gui.windows;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import memorypro.MemoryPro;
 
 /**
  *
@@ -14,28 +15,29 @@ import javax.swing.JFrame;
  */
 public class Window extends JFrame {
     public Integer type ;
+    public MemoryPro app ;
     
     public Window(){
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-           
+        
     }
     
-    public Window(Integer type){
-        this();
-        setType(type);
+    public Window(MemoryPro app){
+        setApp(app);
+    }
+    
+    public void setApp(MemoryPro app){
+        this.app = app ;
     }
     
     public void setType(Integer type){
         this.type = type ;
     }
     
-    
     public static final Integer
         LOGIN       = 0,
         MAIN        = 1,
         NOTES       = 3,
-        ADD_NOTE    = 4,
+        NEW_NOTE    = 4,
         ACCOUNT     = 5,
         BROWSE      = 6,
         EDIT_NOTE   = 7

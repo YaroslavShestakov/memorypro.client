@@ -11,7 +11,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import memorypro.MemoryPro;
-import memorypro.gui.Window;
+import memorypro.gui.windows.Window;
 
 /**
  *

@@ -5,20 +5,23 @@ import java.util.Date;
  * @author Jani Liikkanen
  */
 public class Note {
-    private String header;
-    private String message;
-    private Date date;
+    private Integer id ;
+    private String title;
+    private String description;
+    private Date alertdate;
+    private boolean enabled ;
     
     /**
      * Constructor for Note.
      * @param header Topic of the note.
      * @param message Message of the note.
-     * @param date Date for note's deadline.
+     * @param date Date for note deadline.
      */
-    public Note(String header, String message, Date date) {
-        this.header = header;
-        this.message = message;
-        this.date = date;
+    public Note(String title, String description, Date date) {
+        this.title = title ;
+        this.description = description ;
+        this.alertdate = date;
+        this.enabled = true ;
     }
     
     /**
@@ -26,62 +29,82 @@ public class Note {
      * @param header Topic of the note.
      * @param message Message of the note.
      */
-    public Note(String header, String message) {
-        this.header = header;
-        this.message = message;
-        date = new Date();
+    public Note(String title, String description) {
+        this(title, description, new Date());
     }
     
     /**
      * Returns the header of the note.
      * @return Header of the note.
      */
-    public String getHeader() {
-        return header;
+    public String getTitle() {
+        return title ;
     }
     
     /**
      * Returns the message of the note.
      * @return Message of the note.
      */
-    public String getMessage() {
-        return message;
+    public String getDescription() {
+        return description ;
+    }
+    
+    /**
+     * returns the note alert date.
+     * @return Deadline of the note.
+     */
+    public Date getDate() {
+        return alertdate;
+    }
+    
+    public boolean isEnabled(){
+        return this.enabled ;
+    }
+    
+    public boolean isActive(){
+        return (this.alertdate.before(new Date())) ;
     }
     
     /**
      * Sets the header of a note.
      * @param newHeader New header for the note.
      */
-    public void setHeader(String newHeader) {
-        header = newHeader;
+    public void setTitle(String title){
+        this.title = title ;
+    }
+    
+    public void setEnabled(boolean status){
+        this.enabled = status ;
     }
     
     /**
      * Sets the message of the note.
      * @param newMsg New message for the note.
      */
-    public void setMessage(String newMsg) {
-        message = newMsg;
+    public void setDescription(String description){
+        this.description = description ;
     }
     
-    /**
-     * returns the note's deadline.
-     * @return Deadline of the note.
-     */
-    public Date getDate() {
-        return date;
+    public void setAlertDate(Date date){
+        this.alertdate = date ;
     }
+    
+
     
     /**
      * Returns a string containing data about the note.
      * @return String with info about the note.
      */
+    @Override
     public String toString() {
-        String strToReturn = header;
-        strToReturn += " - " + message;
-        if (date.toString() != null){
-            strToReturn += " - " +  date.toString();
+        String strToReturn = title ;
+        if (alertdate.toString() != null){
+            strToReturn += " - " +  alertdate.toString();
         }
         return strToReturn;
+    }
+
+    public Date getAlertDate() {
+        return this.alertdate ;
     }
 }
