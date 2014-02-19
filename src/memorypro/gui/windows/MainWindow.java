@@ -4,9 +4,12 @@
  */
 package memorypro.gui.windows;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
@@ -43,6 +46,23 @@ public class MainWindow extends Window {
                 }
             }
         });
+        
+        this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    int i;
+                    i = JOptionPane.showConfirmDialog(
+                            MainWindow.this,
+                            "Are you sure you want to close MemoryPro?\nYou will not be able to receive notifications",
+                            "Exit?",
+                            JOptionPane.YES_NO_OPTION);
+                    
+                    if (i == 0) {
+                        MainWindow.this.app.gui.closeWindow(MainWindow.this);
+                    } else 
+                        return ;
+                }
+            });
     }
     
     public void rebuildList(){
@@ -241,7 +261,7 @@ public class MainWindow extends Window {
 
         description_panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Description", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(51, 0, 51)));
         description_panel.setToolTipText("");
-        description_panel.setName("Description");
+        description_panel.setName("Description"); // NOI18N
 
         description.setBackground(new java.awt.Color(240, 240, 240));
         description.setColumns(15);
@@ -294,6 +314,7 @@ public class MainWindow extends Window {
         );
 
         editNote_btn.setText("Edit...");
+        editNote_btn.setFocusable(false);
         editNote_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editNote_btnActionPerformed(evt);
@@ -309,15 +330,18 @@ public class MainWindow extends Window {
                 .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(note_panelLayout.createSequentialGroup()
-                        .addComponent(note_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(editNote_btn)
-                    .addGroup(note_panelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(description_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(date_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(properties_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(properties_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(note_panelLayout.createSequentialGroup()
+                        .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(note_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(note_panelLayout.createSequentialGroup()
+                                .addGap(104, 104, 104)
+                                .addComponent(editNote_btn)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         note_panelLayout.setVerticalGroup(
@@ -442,7 +466,7 @@ public class MainWindow extends Window {
             .addGroup(layout.createSequentialGroup()
                 .addGap(284, 284, 284)
                 .addComponent(jLabel1)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

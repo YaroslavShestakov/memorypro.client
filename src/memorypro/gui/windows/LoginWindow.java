@@ -16,8 +16,10 @@ public class LoginWindow extends Window {
     /**
      * Creates new form Login
      */
-    public LoginWindow() {
+    public LoginWindow(MemoryPro app) {
+        super(app);
         initComponents();
+        status.setText("");
     }
 
     /**
@@ -87,7 +89,7 @@ public class LoginWindow extends Window {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(99, 99, 99)
                 .addComponent(password_label)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,6 +148,7 @@ public class LoginWindow extends Window {
         });
 
         btnHelp.setText("Help");
+        btnHelp.setFocusable(false);
         btnHelp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHelpActionPerformed(evt);
@@ -173,13 +176,17 @@ public class LoginWindow extends Window {
                 .addContainerGap())
         );
 
-        status.setBackground(new java.awt.Color(240, 240, 240));
         status.setEditable(false);
         status.setForeground(new java.awt.Color(153, 0, 0));
         status.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         status.setText("Status");
         status.setBorder(null);
         status.setFocusable(false);
+        status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -263,6 +270,10 @@ public class LoginWindow extends Window {
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
 
    }//GEN-LAST:event_btnHelpActionPerformed
+
+    private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHelp;

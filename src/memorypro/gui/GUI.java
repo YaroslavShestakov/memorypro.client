@@ -1,7 +1,12 @@
 package memorypro.gui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import memorypro.gui.windows.* ;
 import java.util.HashMap;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import memorypro.Display;
 import memorypro.MemoryPro;
 
@@ -21,6 +26,7 @@ public class GUI {
     public Window openWindow(Integer type){
         if (windows.containsKey(type)){
             final Window existing = windows.get(type);
+            System.out.println("Opening existing");
             //Move the window to front
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -36,15 +42,19 @@ public class GUI {
             Window window = null ;
             
             if (type == Window.LOGIN){
-                window = new LoginWindow();
+                window = new LoginWindow(app);
                 window.setResizable(false);
                 window.setTitle("MemoryPro [login]");
+                window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } else if (type == Window.MAIN){
                 window = new MainWindow(app);
                 window.setTitle("Welcome to MemoryPro");
+                window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                
             } else if (type == Window.NEW_NOTE){
                 window = new NewNoteWindow(app);
                 window.setTitle("MemoryPro [new note]");
+                window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
             
             if (window != null)
@@ -54,16 +64,19 @@ public class GUI {
         }
     }
     
-    public void closeWindow(Integer type){
+    public void closeWindow(Integer type){ System.out.println("Close");
         if (windows.containsKey(type)){
             Window window = windows.get(type);
+                 
+            System.out.println("Window found");
+           
             //window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             window.setVisible(false);
             window.dispose();
             
-            windows.remove(window);
+            windows.remove(type);
             
-                    
+            
             if (windows.size() == 0){
                 System.out.println("All windows closed, terminating.");
                 app.exit();
@@ -75,7 +88,7 @@ public class GUI {
         this.closeWindow(window.type);
     }
     
-        private void setupNewWindow(Window window, Integer type){
+    private void setupNewWindow(Window window, Integer type){
         window.setApp(this.app);
         window.setType(type);
 

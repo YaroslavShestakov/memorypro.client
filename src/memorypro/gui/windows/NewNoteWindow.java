@@ -17,6 +17,8 @@ public class NewNoteWindow extends Window {
      */
     public NewNoteWindow(MemoryPro app){
         super(app);
+        
+        System.out.println("New Window");
         initComponents();
     }
 

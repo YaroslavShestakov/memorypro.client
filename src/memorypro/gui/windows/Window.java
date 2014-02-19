@@ -6,7 +6,10 @@ package memorypro.gui.windows;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import memorypro.MemoryPro;
 
 /**
@@ -17,13 +20,12 @@ public class Window extends JFrame {
     public Integer type ;
     public MemoryPro app ;
     
-    public Window(){
-        
-    }
-    
     public Window(MemoryPro app){
         setApp(app);
+        this.setDefaultCloseOperation(Window.DO_NOTHING_ON_CLOSE);
     }
+    
+    //public overrideClose
     
     public void setApp(MemoryPro app){
         this.app = app ;

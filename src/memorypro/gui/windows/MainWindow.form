@@ -106,6 +106,7 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -275,17 +276,22 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="title_panel" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="note_scroll" min="-2" pref="267" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="editNote_btn" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="description_panel" alignment="1" max="32767" attributes="0"/>
                               <Component id="date_panel" alignment="1" max="32767" attributes="0"/>
                               <Component id="properties_panel" alignment="1" max="32767" attributes="0"/>
                           </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="note_scroll" min="-2" pref="267" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                                  <Component id="editNote_btn" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -368,7 +374,7 @@
               </Border>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="name" type="java.lang.String" value="Description"/>
+            <Property name="name" type="java.lang.String" value="Description" noResource="true"/>
           </Properties>
 
           <Layout>
@@ -470,6 +476,7 @@
         <Component class="javax.swing.JButton" name="editNote_btn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit..."/>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editNote_btnActionPerformed"/>
