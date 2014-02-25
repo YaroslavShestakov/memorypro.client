@@ -31,6 +31,7 @@ public class MainWindow extends Window {
     
     public MainWindow(MemoryPro app) {
         super(app);
+        app.notehandler.addWindow(this);
         initComponents();
         //setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
              
@@ -528,7 +529,7 @@ public class MainWindow extends Window {
     }//GEN-LAST:event_filter_enabled_cbActionPerformed
 
     private void editNote_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editNote_btnActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_editNote_btnActionPerformed
 
     private void dateAsc_radioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateAsc_radioActionPerformed

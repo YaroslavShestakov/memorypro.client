@@ -1,11 +1,13 @@
 package memorypro.notes;
 import java.util.*;
+import memorypro.gui.windows.MainWindow;
 /**
  * Class for handling note objects.
  * @author Jani Liikkanen
  */
 public class NoteHandler {
    private ArrayList<Note> notes = new ArrayList();
+   private MainWindow mainWin = null;
     
    /**
     * Constructor for the NoteHandler.
@@ -21,12 +23,25 @@ public class NoteHandler {
      */
     public void addNote(Note newNote) {
         notes.add(newNote);
+        if (mainWin != null) {
+            mainWin.rebuildList();
+        }
+    }
+    
+    public void editNote(int index, Note newNote) {
+        Note tmpNote = notes.get(index);
+        tmpNote.setTitle(newNote.getTitle());
+        tmpNote.setDescription(newNote.getDescription());
+        tmpNote.setAlertDate(newNote.getDate());
+        mainWin.rebuildList();
     }
     
     public ArrayList getNotes(){
         return this.notes ;
     }
-    
+    public void addWindow(MainWindow mw) {
+        mainWin = mw;
+    }
     /**
      * Returns a list of notes whose header matches the search string.
      * @param header Header that is searched from the list.
