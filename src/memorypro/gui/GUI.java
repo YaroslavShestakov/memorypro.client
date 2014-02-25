@@ -55,6 +55,10 @@ public class GUI {
                 window = new NewNoteWindow(app);
                 window.setTitle("MemoryPro [new note]");
                 window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            } else if (type == Window.ACCOUNT){
+                window = new AccountWindow(app);
+                window.setTitle("MemoryPro");
+                window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
             
             if (window != null)

@@ -415,6 +415,11 @@ public class MainWindow extends Window {
         account_menu.setText("Account");
 
         jMenuItem1.setText("View");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         account_menu.add(jMenuItem1);
 
         main_menu.add(account_menu);
@@ -499,7 +504,13 @@ public class MainWindow extends Window {
     }// </editor-fold>//GEN-END:initComponents
 
     private void about_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_itemActionPerformed
-        // TODO add your handling code here:
+        String help = "Authors: \nLaukkanen Mika\nLiikkanen Jani\n"
+                + "Mattila Klaus\nShestakov Yaroslav\n\n"
+                + "MemoryPro is a free program developed as a school project.\n"
+                + "The program is used for saving and editing notes that help\n"
+                + "you remember important events.";
+        JOptionPane.showMessageDialog(null, help, "MemoryPro",
+                JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_about_itemActionPerformed
 
     private void logout_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_itemActionPerformed
@@ -539,6 +550,10 @@ public class MainWindow extends Window {
     private void filter_expired_cbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filter_expired_cbActionPerformed
         rebuildList();
     }//GEN-LAST:event_filter_expired_cbActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        app.gui.openWindow(Window.ACCOUNT);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_item;

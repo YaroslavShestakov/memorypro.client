@@ -5,6 +5,7 @@
 package memorypro.gui.windows;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import memorypro.MemoryPro;
 
 /**
@@ -237,13 +238,13 @@ public class LoginWindow extends Window {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         status.setText("");
-        if (app.login(email.getText(), String.valueOf(password.getPassword()))) {
+        //if (app.login(email.getText(), String.valueOf(password.getPassword()))) {
             app.gui.openWindow(Window.MAIN);
             app.gui.closeWindow(this);
 
             password.setText("");
             email.setText("");
-        } else {
+        /*} else {
             ArrayList errors = app.errhandler.getLastErrors("login");
             if (errors.contains(memorypro.Error.WRONG_CREDENTIALS)) {
                 System.out.println("Wrong email or password");
@@ -253,6 +254,7 @@ public class LoginWindow extends Window {
                 status.setText("Could not connect to server");
             }
         }
+                */
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
@@ -268,7 +270,10 @@ public class LoginWindow extends Window {
    }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
-
+        String help = "Type in your Email and password to log in.\n"
+                + "Or you can register new user with the register button.";
+        JOptionPane.showMessageDialog(null, help, "MemoryPro",
+                JOptionPane.PLAIN_MESSAGE);
    }//GEN-LAST:event_btnHelpActionPerformed
 
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
