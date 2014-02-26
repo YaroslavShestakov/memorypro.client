@@ -99,6 +99,38 @@ public class MainWindow extends Window {
 
     }
 
+    public void searchList(String searchStr){
+        model.clear();
+        ArrayList<Note> notes = app.notehandler.getNotesByHeader(searchStr);
+        boolean displayEnabled  = this.filter_enabled_cb.isSelected();
+        boolean displayDisabled = this.filter_disabled_cb.isSelected();
+        boolean displayActive   = this.filter_active_cb.isSelected();
+        boolean displayExpired  = this.filter_expired_cb.isSelected();
+        
+        int index = 0 ;
+        for (Note note : notes){
+            if (
+                (
+                  (displayEnabled && note.isEnabled()) 
+                    || 
+                  (displayDisabled && !note.isEnabled())
+                ) && (    
+                  (displayActive && note.isActive())
+                    ||
+                  (displayExpired && !note.isActive())
+                )
+               ){
+                
+                model.add(index, note);
+                index++ ;
+            }
+        }
+        
+        resetNoteData();
+        last = (Note) note_list.getSelectedValue();
+        displayNote(last);
+
+    }
     
     public void displayNote(Note note){
         if (note != null){
@@ -151,6 +183,9 @@ public class MainWindow extends Window {
         dateAsc_radio = new javax.swing.JRadioButton();
         dateDesc_radio = new javax.swing.JRadioButton();
         newNote_btn = new javax.swing.JButton();
+        searchField = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         main_menu = new javax.swing.JMenu();
         account_menu = new javax.swing.JMenu();
@@ -411,6 +446,20 @@ public class MainWindow extends Window {
             }
         });
 
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
         main_menu.setText("MemoryPro");
 
         account_menu.setText("Account");
@@ -481,7 +530,11 @@ public class MainWindow extends Window {
                 .addGap(45, 45, 45)
                 .addComponent(note_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(newNote_btn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(newNote_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchField)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
@@ -493,12 +546,21 @@ public class MainWindow extends Window {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(newNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(sort_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(sort_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(57, 57, 57)
+                                .addComponent(btnSearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(note_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -556,10 +618,20 @@ public class MainWindow extends Window {
         app.gui.openWindow(Window.ACCOUNT);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        searchList(searchField.getText());
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        rebuildList();
+    }//GEN-LAST:event_btnClearActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_item;
     private javax.swing.JMenu account_menu;
     private javax.swing.JLabel alertdate;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JRadioButton dateAsc_radio;
     private javax.swing.JRadioButton dateDesc_radio;
     private javax.swing.JPanel date_panel;
@@ -592,6 +664,7 @@ public class MainWindow extends Window {
     private javax.swing.JPanel note_panel;
     private javax.swing.JScrollPane note_scroll;
     private javax.swing.JPanel properties_panel;
+    private javax.swing.JTextField searchField;
     private javax.swing.ButtonGroup sort_date_bgroup;
     private javax.swing.JPanel sort_panel;
     private javax.swing.JLabel title;

@@ -47,10 +47,10 @@ public class NoteHandler {
      * @param header Header that is searched from the list.
      * @return List with notes whose header matches the search string.
      */
-    /*public static LinkedList<Note> getNotesByHeader(String header) {
-        LinkedList<Note> notesToReturn = new LinkedList<>();
+    public ArrayList<Note> getNotesByHeader(String header) {
+        ArrayList<Note> notesToReturn = new ArrayList<Note>();
         for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getHeader().toLowerCase().contains(header.toLowerCase())) {
+            if (notes.get(i).getTitle().toLowerCase().contains(header.toLowerCase())) {
 //            if (notes.get(i).getHeader().equals(header)) {
                 notesToReturn.add(notes.get(i));
             }
@@ -61,6 +61,7 @@ public class NoteHandler {
         return null;
     }
     
+    /*
     /**
      * Returns a note from certain index.
      * @param index Index of the note wanted.
