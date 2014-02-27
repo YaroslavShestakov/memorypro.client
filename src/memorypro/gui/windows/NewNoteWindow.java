@@ -8,7 +8,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import memorypro.MemoryPro;
@@ -20,17 +22,32 @@ import memorypro.notes.Note;
  */
 public class NewNoteWindow extends Window {
     MainWindow mainWin;
+    Note noteToEdit = null;
     /**
      * Creates new form NewNoteWindow
      */
     public NewNoteWindow(MemoryPro app){
         super(app);
-        
+        app.notehandler.addNewNoteWindow(this);
         System.out.println("New Window");
         initComponents();
         status.setText("");
     }
 
+    public void editNote(Note note) {
+        noteToEdit = note;
+        title.setText(note.getTitle());
+        description.setText(note.getDescription());
+        Date date = note.getAlertDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        
+        
+        day.setText(""+cal.get(Calendar.DAY_OF_MONTH));
+        month.setText(""+(cal.get(Calendar.MONTH)+1));
+        year.setText(""+cal.get(Calendar.YEAR));
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -264,21 +281,29 @@ public class NewNoteWindow extends Window {
             status.setText("Date input must be dd/mm/yyyy");
             return;
         }
-        
-        Note newNote = null;
-        if (date == null) {
-            newNote = new Note(title.getText(), description.getText());
+        if (noteToEdit == null) {
+            Note newNote = null;
+            if (date == null) {
+                newNote = new Note(title.getText(), description.getText());
+            }
+            else {
+                newNote = new Note(title.getText(), description.getText(), date);
+            }
+            
+            app.notehandler.addNote(newNote);
         }
         else {
-            newNote = new Note(title.getText(), description.getText(), date);
+            noteToEdit.setAlertDate(date);
+            noteToEdit.setDescription(description.getText());
+            noteToEdit.setTitle(title.getText());
         }
-//        notes.add(newNote);
-        app.notehandler.addNote(newNote);
+        
         title.setText("");
         description.setText("");
         day.setText("");
         month.setText("");
         year.setText("");
+        app.gui.closeWindow(Window.NEW_NOTE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed

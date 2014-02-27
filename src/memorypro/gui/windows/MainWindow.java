@@ -31,7 +31,7 @@ public class MainWindow extends Window {
     
     public MainWindow(MemoryPro app) {
         super(app);
-        app.notehandler.addWindow(this);
+        app.notehandler.addMainWindow(this);
         initComponents();
         //setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
              
@@ -591,7 +591,13 @@ public class MainWindow extends Window {
     }//GEN-LAST:event_filter_enabled_cbActionPerformed
 
     private void editNote_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editNote_btnActionPerformed
-        
+        Note tmp = null;
+        tmp = (Note) note_list.getSelectedValue();
+        if (tmp != null) {
+            app.gui.openWindow(Window.NEW_NOTE);
+            System.out.println(note_list.getSelectedValue().toString());
+            app.notehandler.editNote(tmp);
+        }
     }//GEN-LAST:event_editNote_btnActionPerformed
 
     private void dateAsc_radioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateAsc_radioActionPerformed
