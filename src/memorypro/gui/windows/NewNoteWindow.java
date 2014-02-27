@@ -303,7 +303,7 @@ public class NewNoteWindow extends Window {
             else {
                 newNote = new Note(title.getText(), description.getText(), date);
             }
-            
+
             app.notehandler.addNote(newNote);
         }
         else {
