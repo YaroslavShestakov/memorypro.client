@@ -30,6 +30,7 @@ public class NoteHandler {
         }
     }
     
+    /*
     public void editNote(int index, Note newNote) {
         Note tmpNote = notes.get(index);
         tmpNote.setTitle(newNote.getTitle());
@@ -37,24 +38,40 @@ public class NoteHandler {
         tmpNote.setAlertDate(newNote.getDate());
         mainWin.rebuildList();
     }
+    */
     
+    /**
+     * Sends the selected note's data into the NewNoteWindow frame.
+     * @param note The selected note.
+     */
     public void editNote(Note note) {
         if (note == null) {
-            System.out.println("NoteHandler, editNote(), note null");
             return;
         }
         if (newNoteWin != null)
             newNoteWin.editNote(note);
-        System.out.println("newNoteWin = " + newNoteWin);
-//        System.out.println("Note: " + note.getClass().toString());
     }
     
+    /**
+     * Returns all saved notes.
+     * @return Saved notes.
+     */
     public ArrayList getNotes(){
         return this.notes ;
     }
+    
+    /**
+     * Saves the main window for accessibility.
+     * @param mw MainWindow object.
+     */
     public void addMainWindow(MainWindow mw) {
         mainWin = mw;
     }
+    
+    /**
+     * Saves the new note window for accessibility.
+     * @param nnw NewNoteWindow object.
+     */
     public void addNewNoteWindow(NewNoteWindow nnw) {
         System.out.println("Added new note window");
         newNoteWin = nnw;
@@ -76,27 +93,4 @@ public class NoteHandler {
         }
         return null;
     }
-    
-    /*
-    /**
-     * Returns a note from certain index.
-     * @param index Index of the note wanted.
-     * @return Note from a certain index.
-     */
-    /*public static Note get(int index) {
-        if (index < notes.size()) {
-            return notes.get(index);
-        }
-        else {
-            return null;
-        }
-    }*/
-    
-    /**
-     * Returns the size of the note list.
-     * @return Size of the note list.
-     */
-    /*public static int size() {
-        return notes.size();
-    }*/
 }

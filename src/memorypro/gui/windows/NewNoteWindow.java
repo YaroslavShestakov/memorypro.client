@@ -34,6 +34,11 @@ public class NewNoteWindow extends Window {
         status.setText("");
     }
 
+    /**
+     * Gets the selected note from the list, and sets it's values into the
+     * textfields etc. When saved, changes the values of the selected note.
+     * @param note Selected note from the main window's list.
+     */
     public void editNote(Note note) {
         noteToEdit = note;
         title.setText(note.getTitle());
@@ -73,8 +78,8 @@ public class NewNoteWindow extends Window {
         jLabel3 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         status = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnDiscard = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,17 +221,17 @@ public class NewNoteWindow extends Window {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Save");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSaveActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Discard");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnDiscard.setText("Discard");
+        btnDiscard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnDiscardActionPerformed(evt);
             }
         });
 
@@ -239,9 +244,9 @@ public class NewNoteWindow extends Window {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnDiscard)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(btnSave)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -251,24 +256,33 @@ public class NewNoteWindow extends Window {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnSave)
+                    .addComponent(btnDiscard))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    /**
+     * Clears the input fields.
+     * @param evt ActionEvent from discard button.
+     */
+    private void btnDiscardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiscardActionPerformed
         title.setText("");
         description.setText("");
         day.setText("");
         month.setText("");
         year.setText("");
         app.gui.closeWindow(this);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        noteToEdit = null;
+    }//GEN-LAST:event_btnDiscardActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    /**
+     * Saves the note as either a new note, or old note that's being edited.
+     * @param evt ActionEvent from save button.
+     */
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         String dateString = day.getText()+"/"+month.getText()+"/"+year.getText();
         
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -304,7 +318,8 @@ public class NewNoteWindow extends Window {
         month.setText("");
         year.setText("");
         app.gui.closeWindow(Window.NEW_NOTE);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        noteToEdit = null;
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
         // TODO add your handling code here:
@@ -316,10 +331,10 @@ public class NewNoteWindow extends Window {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDiscard;
+    private javax.swing.JButton btnSave;
     private javax.swing.JTextField day;
     private javax.swing.JTextPane description;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

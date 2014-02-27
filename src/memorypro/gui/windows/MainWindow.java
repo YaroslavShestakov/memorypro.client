@@ -66,6 +66,9 @@ public class MainWindow extends Window {
             });
     }
     
+    /**
+     * Update the list of notes, and show only selected items.
+     */
     public void rebuildList(){
         model.clear();
         ArrayList<Note> notes = app.notehandler.getNotes();
@@ -99,6 +102,10 @@ public class MainWindow extends Window {
 
     }
 
+    /**
+     * Updates the shown list with items containing the searched string.
+     * @param searchStr String searched from notes headers.
+     */
     public void searchList(String searchStr){
         model.clear();
         ArrayList<Note> notes = app.notehandler.getNotesByHeader(searchStr);
@@ -108,6 +115,7 @@ public class MainWindow extends Window {
         boolean displayExpired  = this.filter_expired_cb.isSelected();
         
         int index = 0 ;
+        if (notes != null)
         for (Note note : notes){
             if (
                 (
@@ -132,6 +140,10 @@ public class MainWindow extends Window {
 
     }
     
+    /**
+     * Displays the info of the selected note.
+     * @param note Note selected from the list.
+     */
     public void displayNote(Note note){
         if (note != null){
             title.setText(note.getTitle());
@@ -141,6 +153,9 @@ public class MainWindow extends Window {
             resetNoteData();
     }
     
+    /**
+     * Empties the displayed info of note.
+     */
     public void resetNoteData(){
         title.setText("");
         description.setText("");
@@ -576,12 +591,20 @@ public class MainWindow extends Window {
                 JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_about_itemActionPerformed
 
+    /**
+     * Logs the user out of the program.
+     * @param evt ActionEvent from the menu item.
+     */
     private void logout_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_itemActionPerformed
         app.logout();
         app.gui.closeWindow(this);
         app.gui.openWindow(Window.LOGIN);
     }//GEN-LAST:event_logout_itemActionPerformed
 
+    /**
+     * Exits the program.
+     * @param evt ActionEvent from the menu item.
+     */
     private void exit_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_itemActionPerformed
         app.exit();
     }//GEN-LAST:event_exit_itemActionPerformed
@@ -590,12 +613,15 @@ public class MainWindow extends Window {
         rebuildList();
     }//GEN-LAST:event_filter_enabled_cbActionPerformed
 
+    /**
+     * Opens a window where you can edit the selected note.
+     * @param evt ActionEvent from the button.
+     */
     private void editNote_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editNote_btnActionPerformed
         Note tmp = null;
         tmp = (Note) note_list.getSelectedValue();
         if (tmp != null) {
             app.gui.openWindow(Window.NEW_NOTE);
-            System.out.println(note_list.getSelectedValue().toString());
             app.notehandler.editNote(tmp);
         }
     }//GEN-LAST:event_editNote_btnActionPerformed
@@ -604,6 +630,10 @@ public class MainWindow extends Window {
        
     }//GEN-LAST:event_dateAsc_radioActionPerformed
 
+    /**
+     * Opens a window for adding new note.
+     * @param evt ActionEvent from the button.
+     */
     private void newNote_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newNote_btnActionPerformed
         app.gui.openWindow(Window.NEW_NOTE);
     }//GEN-LAST:event_newNote_btnActionPerformed
@@ -624,10 +654,19 @@ public class MainWindow extends Window {
         app.gui.openWindow(Window.ACCOUNT);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    /**
+     * Applies a searchstring to the notelist, and refreshes the list
+     * to display only notes containgin the searched string.
+     * @param evt ActionEvent from the button.
+     */
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         searchList(searchField.getText());
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    /**
+     * Clears the search parameter and shows all notes in the list.
+     * @param evt 
+     */
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         rebuildList();
     }//GEN-LAST:event_btnClearActionPerformed

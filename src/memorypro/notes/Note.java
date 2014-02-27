@@ -57,10 +57,18 @@ public class Note {
         return alertdate;
     }
     
+    /**
+     * Returns the boolean value of the note's activity state.
+     * @return 
+     */
     public boolean isEnabled(){
         return this.enabled ;
     }
     
+    /**
+     * Returns the activity state of the note.
+     * @return the activity state.
+     */
     public boolean isActive(){
         return (this.alertdate.before(new Date())) ;
     }
@@ -104,6 +112,10 @@ public class Note {
         return strToReturn;
     }
 
+    /**
+     * Returns the date the note is supposed to alert.
+     * @return Alert date of the note.
+     */
     public Date getAlertDate() {
         return this.alertdate ;
     }

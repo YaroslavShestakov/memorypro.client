@@ -269,6 +269,10 @@ public class LoginWindow extends Window {
 
    }//GEN-LAST:event_btnRegisterActionPerformed
 
+    /**
+     * Displays a help pop up window.
+     * @param evt ActionEvent from the help button.
+     */
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
         String help = "Type in your Email and password to log in.\n"
                 + "Or you can register new user with the register button.";
