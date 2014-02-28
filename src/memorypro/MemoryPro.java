@@ -35,6 +35,12 @@ public class MemoryPro {
         }
     }
     
+    /**
+     * Login to the program.
+     * @param email User's email address.
+     * @param password User's password.
+     * @return Returns true if login succeeds.
+     */
     public boolean login(String email, String password){
         String request = "?action=login&data[email]="+email+"&data[password]="+password ;
         
@@ -77,6 +83,10 @@ public class MemoryPro {
         return false;
     }
 
+    /**
+     * Loads all notes of the user from the database.
+     * @return Return true if loading succeeds.
+     */
     public boolean loadNotes(){
         if (this.sid != null){
             String request = "?action=get_notes&sid="+this.sid ;
@@ -129,6 +139,11 @@ public class MemoryPro {
         return false ;
     }
     
+    /**
+     * Add a new note into database.
+     * @param note The note added to database.
+     * @return Returns a boolean value if adding succeeded.
+     */
     public boolean addNote(Note note){
         if (this.sid != null){
             String request = "?action=add_note&sid="+this.sid ;
@@ -156,6 +171,9 @@ public class MemoryPro {
     
     
 
+    /**
+     * Closes the program.
+     */
     public void exit(){
         System.exit(0);
     }
@@ -171,6 +189,9 @@ public class MemoryPro {
         MemoryPro app = new MemoryPro(true);
     }
 
+    /**
+     * Logs out the current user.
+     */
     public void logout() {
         this.user = new User();
         this.sid = null ;
