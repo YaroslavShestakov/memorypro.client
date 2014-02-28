@@ -597,8 +597,8 @@ public class MainWindow extends Window {
      */
     private void logout_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_itemActionPerformed
         app.logout();
-        app.gui.closeWindow(this);
         app.gui.openWindow(Window.LOGIN);
+        app.gui.closeWindow(this);
     }//GEN-LAST:event_logout_itemActionPerformed
 
     /**

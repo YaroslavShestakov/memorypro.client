@@ -10,6 +10,7 @@ public class Note {
     private String description;
     private Date alertdate;
     private boolean enabled ;
+    private Integer userId ;
     
     /**
      * Constructor for Note.
@@ -22,6 +23,10 @@ public class Note {
         this.description = description ;
         this.alertdate = date;
         this.enabled = true ;
+    }
+    
+    public Note(){
+        
     }
     
     /**

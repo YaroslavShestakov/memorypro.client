@@ -48,7 +48,6 @@ public class LoginWindow extends Window {
         status = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(335, 486));
 
         title.setBackground(new java.awt.Color(240, 240, 240));
         title.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -66,6 +65,7 @@ public class LoginWindow extends Window {
             }
         });
 
+        email.setText("Test");
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailActionPerformed(evt);
@@ -74,6 +74,7 @@ public class LoginWindow extends Window {
 
         email_label.setText("Email");
 
+        password.setText("Test");
         password.setPreferredSize(new java.awt.Dimension(100, 20));
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +91,7 @@ public class LoginWindow extends Window {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(99, 99, 99)
                 .addComponent(password_label)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,13 +239,14 @@ public class LoginWindow extends Window {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         status.setText("");
-        //if (app.login(email.getText(), String.valueOf(password.getPassword()))) {
+        if (app.login(email.getText(), String.valueOf(password.getPassword()))) {
             app.gui.openWindow(Window.MAIN);
+            app.loadNotes();
             app.gui.closeWindow(this);
 
             password.setText("");
             email.setText("");
-        /*} else {
+        } else {
             ArrayList errors = app.errhandler.getLastErrors("login");
             if (errors.contains(memorypro.Error.WRONG_CREDENTIALS)) {
                 System.out.println("Wrong email or password");
@@ -254,7 +256,7 @@ public class LoginWindow extends Window {
                 status.setText("Could not connect to server");
             }
         }
-                */
+                
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed

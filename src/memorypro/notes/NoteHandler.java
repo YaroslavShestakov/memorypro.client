@@ -93,4 +93,8 @@ public class NoteHandler {
         }
         return null;
     }
+    
+    public void clear(){
+        notes.clear();
+    }
 }

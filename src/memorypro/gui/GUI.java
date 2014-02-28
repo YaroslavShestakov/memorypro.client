@@ -23,6 +23,13 @@ public class GUI {
 
     }
     
+    public Window getWindow(Integer type){
+        if (windows.containsKey(type)){
+            return windows.get(type);
+        }
+        return null ;
+    }
+    
     public Window openWindow(Integer type){
         if (windows.containsKey(type)){
             final Window existing = windows.get(type);
@@ -104,7 +111,8 @@ public class GUI {
         window.repaint();
         window.printAll(window.getGraphics());  
         window.setVisible(true);
-                                
+        window.pack();                        
+        
        windows.put(type, window);
     }
 }
