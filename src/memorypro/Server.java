@@ -10,9 +10,10 @@ import java.net.URLConnection;
  * @author 
  */
 public class Server {
-    //private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
-    private static final String base = "http://localhost/mp/api/" ;
+  private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
+//    private static final String base = "http://localhost/mp/api/" ;
        
+  
     public static URLConnection getConnection(String request){
         try {
             URLConnection connection = new URL(base + request).openConnection();
@@ -24,6 +25,11 @@ public class Server {
         return null ;
     }
     
+    /**
+     * Returns the response from database in form of a json object.
+     * @param connection The connection to the database.
+     * @return String of database response in json form.
+     */
     public static String getResponse(URLConnection connection){
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));

@@ -23,6 +23,11 @@ public class GUI {
 
     }
     
+    /**
+     * Returns a window that matches the given type.
+     * @param type The integer number connected with a window type.
+     * @return The window of the given type.
+     */
     public Window getWindow(Integer type){
         if (windows.containsKey(type)){
             return windows.get(type);
@@ -30,6 +35,11 @@ public class GUI {
         return null ;
     }
     
+    /**
+     * Opens the window of a given type.
+     * @param type Integer number connected with a window type.
+     * @return The window of the given type.
+     */
     public Window openWindow(Integer type){
         if (windows.containsKey(type)){
             final Window existing = windows.get(type);
@@ -80,11 +90,16 @@ public class GUI {
         }
     }
     
-    public void closeWindow(Integer type){ System.out.println("Close");
+    /**
+     * Closes the window of given type.
+     * @param type Integer number connected with a window type.
+     */
+    public void closeWindow(Integer type){ 
+//        System.out.println("Close");
         if (windows.containsKey(type)){
             Window window = windows.get(type);
                  
-            System.out.println("Window found");
+//            System.out.println("Window found");
            
             //window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
             window.setVisible(false);
@@ -100,10 +115,19 @@ public class GUI {
         }
     }
     
+    /**
+     * Close the given window.
+     * @param window The window wanted to be closed.
+     */
     public void closeWindow(Window window){
         this.closeWindow(window.type);
     }
     
+    /**
+     * Sets up a new window if not previously found.
+     * @param window Window type.
+     * @param type Integer number of the window type.
+     */
     private void setupNewWindow(Window window, Integer type){
         window.setApp(this.app);
         window.setType(type);

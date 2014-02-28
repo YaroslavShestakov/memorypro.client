@@ -25,12 +25,18 @@ public class Window extends JFrame {
         this.setDefaultCloseOperation(Window.DO_NOTHING_ON_CLOSE);
     }
     
-    //public overrideClose
-    
+    /**
+     * Saves the main program for accessibility.
+     * @param app The main program.
+     */
     public void setApp(MemoryPro app){
         this.app = app ;
     }
     
+    /**
+     * Sets the type of a window.
+     * @param type Integer number connected with window type.
+     */
     public void setType(Integer type){
         this.type = type ;
     }

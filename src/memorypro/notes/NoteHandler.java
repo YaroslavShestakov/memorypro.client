@@ -29,17 +29,7 @@ public class NoteHandler {
             mainWin.rebuildList();
         }
     }
-    
-    /*
-    public void editNote(int index, Note newNote) {
-        Note tmpNote = notes.get(index);
-        tmpNote.setTitle(newNote.getTitle());
-        tmpNote.setDescription(newNote.getDescription());
-        tmpNote.setAlertDate(newNote.getDate());
-        mainWin.rebuildList();
-    }
-    */
-    
+        
     /**
      * Sends the selected note's data into the NewNoteWindow frame.
      * @param note The selected note.
@@ -94,6 +84,9 @@ public class NoteHandler {
         return null;
     }
     
+    /**
+     * Clears the list of notes.
+     */
     public void clear(){
         notes.clear();
     }
