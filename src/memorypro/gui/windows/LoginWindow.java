@@ -268,7 +268,8 @@ public class LoginWindow extends Window {
     }//GEN-LAST:event_passwordjButton1ActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-
+        this.app.gui.openWindow(Window.REGISTER);
+        this.app.gui.closeWindow(this);
    }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**

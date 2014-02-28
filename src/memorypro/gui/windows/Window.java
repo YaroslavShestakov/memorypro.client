@@ -42,6 +42,7 @@ public class Window extends JFrame {
         NEW_NOTE    = 4,
         ACCOUNT     = 5,
         BROWSE      = 6,
-        EDIT_NOTE   = 7
+        EDIT_NOTE   = 7,
+        REGISTER    = 8
     ;
 }

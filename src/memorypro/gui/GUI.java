@@ -7,7 +7,7 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
-import memorypro.Display;
+import memorypro.utils.Display;
 import memorypro.MemoryPro;
 
 /**
@@ -52,6 +52,11 @@ public class GUI {
                 window = new LoginWindow(app);
                 window.setResizable(false);
                 window.setTitle("MemoryPro [login]");
+                window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            } else if (type == Window.REGISTER){
+                window = new RegistrationWindow(app);
+                window.setResizable(false);
+                window.setTitle("MemoryPro [registration]");
                 window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             } else if (type == Window.MAIN){
                 window = new MainWindow(app);
@@ -110,8 +115,7 @@ public class GUI {
          );
         window.repaint();
         window.printAll(window.getGraphics());  
-        window.setVisible(true);
-        window.pack();                        
+        window.setVisible(true);                       
         
        windows.put(type, window);
     }

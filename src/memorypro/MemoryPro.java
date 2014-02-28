@@ -1,14 +1,19 @@
 package memorypro;
 
+import memorypro.utils.Display;
 import memorypro.gui.GUI;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import memorypro.gui.windows.Window;
 import memorypro.notes.Note;
 import memorypro.notes.NoteHandler;
@@ -91,8 +96,12 @@ public class MemoryPro {
                     
                     if (status){
                         notehandler.clear();
-                        
-                        JSONArray notes = response.getJSONArray("data");
+                        JSONArray notes = null ;
+                        try {
+                            notes = response.getJSONArray("data");
+                        } catch (Exception e){
+                            return false ;
+                        }
                         
                                                     
                         // Timestamp from MySQL is in format of yyyy-MM-dd HH:mm:ss
@@ -172,7 +181,34 @@ public class MemoryPro {
     }
 
     public void logout() {
+        notehandler.clear();
         this.user = new User();
         this.sid = null ;
+    }
+
+    public boolean register(String email, String pass, String firstname, String lastname, String phone) {
+        try {
+            String request = "?action=register" ;
+            request += "&data[email]="      + URLEncoder.encode(email, "UTF-8") ;
+            request += "&data[password]="   + URLEncoder.encode(pass, "UTF-8") ;
+            request += "&data[firstname]="  + URLEncoder.encode(firstname, "UTF-8") ;
+            request += "&data[lastname]="   + URLEncoder.encode(lastname, "UTF-8") ;
+            request += "&data[phone]="      + URLEncoder.encode(phone, "UTF-8") ;
+            
+            URLConnection connection = Server.getConnection(request);
+            if (connection != null){
+                String json = Server.getResponse(connection);
+                
+                if (json != null){
+                    JSONObject response = new JSONObject(json);
+                    Boolean status   = response.getBoolean("status") ;
+                    
+                    return status ;
+                }
+            }
+        } catch (UnsupportedEncodingException ex) {
+            
+        }
+        return false ;
     }
 }
