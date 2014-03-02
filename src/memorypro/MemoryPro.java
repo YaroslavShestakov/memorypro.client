@@ -40,6 +40,10 @@ public class MemoryPro {
         }
     }
     
+    public User getUser(){
+        return this.user ;
+    }
+    
     /**
      * Login to the program.
      * @param email User's email address.
