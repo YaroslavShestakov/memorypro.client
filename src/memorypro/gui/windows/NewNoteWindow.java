@@ -461,6 +461,7 @@ public class NewNoteWindow extends Window {
             } else {
                 newNote = new Note(title.getText(), description.getText(), date);
             }
+            newNote.setEnabled(enabled_cb.isSelected());
 
             if (app.addNote(newNote)){
                 app.loadNotes();
