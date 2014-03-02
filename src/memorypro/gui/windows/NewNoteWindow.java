@@ -61,7 +61,7 @@ public class NewNoteWindow extends Window {
         day.setText(""+cal.get(Calendar.DAY_OF_MONTH));
         month.setText(""+(cal.get(Calendar.MONTH)+1));
         year.setText(""+cal.get(Calendar.YEAR));
-        hour.setText(""+cal.get(Calendar.HOUR));
+        hour.setText(""+cal.get(Calendar.HOUR_OF_DAY));
         minute.setText(""+cal.get(Calendar.MINUTE));
         
     }
