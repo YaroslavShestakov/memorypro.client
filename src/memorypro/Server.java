@@ -2,16 +2,22 @@ package memorypro;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author 
  */
 public class Server {
-  private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
-//    private static final String base = "http://localhost/mp/api/" ;
+    private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
+    //private static final String base = "http://localhost/mp/api/" ;
+  
+  public static final String MySQL_TS_FORMAT = "yyyy-MM-dd HH:mm:ss" ;
        
   
     public static URLConnection getConnection(String request){
@@ -46,5 +52,14 @@ public class Server {
             
         }
         return null ;
+    }
+    
+    public static String encode(String str){
+        try {
+            return URLEncoder.encode(str, "UTF-8") ;
+        } catch (UnsupportedEncodingException ex) {
+            System.out.println("Server.encode : unknown base");
+            return str ;
+        }
     }
 }

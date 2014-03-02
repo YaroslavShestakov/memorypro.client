@@ -1,5 +1,7 @@
 package memorypro.notes;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import memorypro.Server;
 /**
  * A note class that contains info about a note object.
  * @author Jani Liikkanen
@@ -75,7 +77,7 @@ public class Note {
      * @return the activity state.
      */
     public boolean isActive(){
-        return (this.alertdate.before(new Date())) ;
+        return (this.alertdate.after(new Date())) ;
     }
     
     /**
@@ -102,6 +104,13 @@ public class Note {
         this.alertdate = date ;
     }
     
+    public int getId(){
+        return this.id ;
+    }
+    
+    public void setId(int id){
+        this.id = id ;
+    }
 
     
     /**
@@ -110,9 +119,9 @@ public class Note {
      */
     @Override
     public String toString() {
-        String strToReturn = title ;
-        if (alertdate.toString() != null){
-            strToReturn += " - " +  alertdate.toString();
+        String strToReturn =  title ;
+        if (alertdate != null){
+            strToReturn += "                        " +  (new SimpleDateFormat("dd-mm-yy HH:mm")).format(alertdate) ;
         }
         return strToReturn;
     }

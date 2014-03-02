@@ -4,6 +4,9 @@
  */
 package memorypro.gui.windows;
 
+import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import memorypro.MemoryPro;
 import memorypro.notes.Note;
 
@@ -31,7 +35,12 @@ public class NewNoteWindow extends Window {
         app.notehandler.addNewNoteWindow(this);
         System.out.println("New Window");
         initComponents();
-        status.setText("");
+        reset();
+        addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                NewNoteWindow.this.reset();
+            }
+        });
     }
 
     /**
@@ -43,6 +52,7 @@ public class NewNoteWindow extends Window {
         noteToEdit = note;
         title.setText(note.getTitle());
         description.setText(note.getDescription());
+        enabled_cb.setSelected(note.isEnabled());
         Date date = note.getAlertDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -51,6 +61,8 @@ public class NewNoteWindow extends Window {
         day.setText(""+cal.get(Calendar.DAY_OF_MONTH));
         month.setText(""+(cal.get(Calendar.MONTH)+1));
         year.setText(""+cal.get(Calendar.YEAR));
+        hour.setText(""+cal.get(Calendar.HOUR));
+        minute.setText(""+cal.get(Calendar.MINUTE));
         
     }
     /**
@@ -66,8 +78,8 @@ public class NewNoteWindow extends Window {
         jPanel3 = new javax.swing.JPanel();
         title = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        description = new javax.swing.JTextPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        description = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         day = new javax.swing.JTextField();
@@ -82,13 +94,13 @@ public class NewNoteWindow extends Window {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        hour = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        minute = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        enabled_cb = new javax.swing.JCheckBox();
         status = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         btnDiscard = new javax.swing.JButton();
@@ -117,17 +129,20 @@ public class NewNoteWindow extends Window {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Description"));
 
-        jScrollPane1.setViewportView(description);
+        description.setColumns(20);
+        description.setLineWrap(true);
+        description.setRows(5);
+        jScrollPane2.setViewportView(description);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane2)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Alert"));
@@ -154,6 +169,12 @@ public class NewNoteWindow extends Window {
         jLabel5.setText("/");
 
         year.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        year.setText("2014");
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearActionPerformed(evt);
+            }
+        });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setLabelFor(year);
@@ -227,9 +248,9 @@ public class NewNoteWindow extends Window {
                         .addComponent(jLabel10))))
         );
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        hour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                hourActionPerformed(evt);
             }
         });
 
@@ -257,13 +278,13 @@ public class NewNoteWindow extends Window {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                            .addComponent(jTextField1))
+                            .addComponent(hour))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                            .addComponent(jTextField2))))
+                            .addComponent(minute))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -273,9 +294,9 @@ public class NewNoteWindow extends Window {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(minute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
@@ -283,8 +304,8 @@ public class NewNoteWindow extends Window {
                 .addContainerGap())
         );
 
-        jCheckBox1.setText("Enabled");
-        jCheckBox1.setFocusable(false);
+        enabled_cb.setText("Enabled");
+        enabled_cb.setFocusable(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -293,7 +314,7 @@ public class NewNoteWindow extends Window {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCheckBox1)
+                    .addComponent(enabled_cb)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -301,7 +322,7 @@ public class NewNoteWindow extends Window {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jCheckBox1)
+                .addComponent(enabled_cb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -365,19 +386,19 @@ public class NewNoteWindow extends Window {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDiscard)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSave)))
-                .addContainerGap())
+                        .addComponent(btnSave)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave)
-                    .addComponent(btnDiscard))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDiscard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -388,64 +409,94 @@ public class NewNoteWindow extends Window {
      * @param evt ActionEvent from discard button.
      */
     private void btnDiscardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiscardActionPerformed
-        title.setText("");
-        description.setText("");
-        day.setText("");
-        month.setText("");
-        year.setText("");
+        reset();
         app.gui.closeWindow(this);
-        noteToEdit = null;
     }//GEN-LAST:event_btnDiscardActionPerformed
 
+    public void reset(){
+        title.setText("");
+        description.setText("");    
+        enabled_cb.setSelected(false);     
+        day.setText("");
+        month.setText("");
+        year.setText("2014");
+        hour.setText("");
+        minute.setText("");
+        status.setForeground(Color.BLACK);
+        status.setText("");
+        noteToEdit = null;
+    }
+    
     /**
      * Saves the note as either a new note, or old note that's being edited.
      * @param evt ActionEvent from save button.
      */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        String dateString = day.getText()+"/"+month.getText()+"/"+year.getText();
+        status.setForeground(Color.BLACK);
+        status.setText("");
         
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        if (title.getText().length() < 4){
+            status.setText("Title is too short.");
+            return;
+        }
+        
+        String dateString = 
+                day.getText()+"-"+month.getText()+"-"+year.getText() + " " 
+                + hour.getText() + ":" + minute.getText() + ":00";
+        
+        //Custom date format(not mysql)
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss"); 
         Date date = null;
         
         try {
             date = format.parse(dateString);
         } catch (ParseException ex) {
-//            Logger.getLogger(NewNoteWindow.class.getName()).log(Level.SEVERE, null, ex);
-            status.setText("Date input must be dd/mm/yyyy");
+            status.setText("Alert date is not valid.");
             return;
         }
-        if (noteToEdit == null) {
+        if (noteToEdit == null) { /* In case there is a new note */
             Note newNote = null;
             if (date == null) {
                 newNote = new Note(title.getText(), description.getText());
-            }
-            else {
+            } else {
                 newNote = new Note(title.getText(), description.getText(), date);
             }
 
-            /*if (app.addNote(newNote)){
+            if (app.addNote(newNote)){
+                app.loadNotes();
+                ((MainWindow) app.gui.getWindow(Window.MAIN)).rebuildList();
+                JOptionPane.showMessageDialog(this, "Note added");
                 
+                this.reset();
+                
+                MainWindow main = (MainWindow) app.gui.openWindow(Window.MAIN);
+                main.selectLastNote();
+                app.gui.closeWindow(this);
+               
+            } else {
+                status.setForeground(Color.RED);
+                status.setText("Could not add note to database");
             }
-            app.notehandler.addNote(newNote);*/
-        }
-        else {
-            noteToEdit.setAlertDate(date);
-            noteToEdit.setDescription(description.getText());
+        } else {  /*In case note is edited */
             noteToEdit.setTitle(title.getText());
+            noteToEdit.setDescription(description.getText());
+            noteToEdit.setAlertDate(date);
+            noteToEdit.setEnabled(enabled_cb.isSelected());
+
+            if (app.editNote(noteToEdit)){
+                app.loadNotes();
+                status.setForeground(Color.BLACK);
+                status.setText("Note successfully edited!");
+            } else {
+                status.setForeground(Color.RED);
+                status.setText("Could not edit note");
+            }
         }
-        
-        title.setText("");
-        description.setText("");
-        day.setText("");
-        month.setText("");
-        year.setText("");
-        app.gui.closeWindow(Window.NEW_NOTE);
-        noteToEdit = null;
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hourActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_hourActionPerformed
 
     private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
         // TODO add your handling code here:
@@ -455,13 +506,18 @@ public class NewNoteWindow extends Window {
         // TODO add your handling code here:
     }//GEN-LAST:event_titleActionPerformed
 
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDiscard;
     private javax.swing.JButton btnSave;
     private javax.swing.JTextField day;
-    private javax.swing.JTextPane description;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JTextArea description;
+    private javax.swing.JCheckBox enabled_cb;
+    private javax.swing.JTextField hour;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -480,9 +536,8 @@ public class NewNoteWindow extends Window {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField minute;
     private javax.swing.JTextField month;
     private javax.swing.JLabel status;
     private javax.swing.JTextField title;

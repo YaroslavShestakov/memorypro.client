@@ -41,7 +41,7 @@ public class MainWindow extends Window {
 
             @Override
             public void valueChanged(ListSelectionEvent ev) {
-                if (ev.getValueIsAdjusting()) {
+                if (true) { //ev.getValueIsAdjusting()
                   last = (Note) note_list.getSelectedValue();
                   MainWindow.this.displayNote(last);
                 }
@@ -60,10 +60,21 @@ public class MainWindow extends Window {
                     
                     if (i == 0) {
                         MainWindow.this.app.gui.closeWindow(MainWindow.this);
+                        MainWindow.this.app.exit();
                     } else 
                         return ;
                 }
             });
+    }
+    
+    public void selectLastNote(){
+        note_list.setSelectedIndex(note_list.getModel().getSize()- 1);
+        displayNote((Note) note_list.getSelectedValue());
+    }
+    
+    public void selectFirstNote(){
+        note_list.setSelectedIndex(0);
+        displayNote((Note) note_list.getSelectedValue());
     }
     
     /**
@@ -149,6 +160,9 @@ public class MainWindow extends Window {
             title.setText(note.getTitle());
             description.setText(note.getDescription());
             alertdate.setText(note.getAlertDate().toString());
+            properties.setText((note.isEnabled() ? "Alert is enabled" : "Alert is disabled"));
+            
+            System.out.println(note.isActive());
         } else 
             resetNoteData();
     }
@@ -192,7 +206,9 @@ public class MainWindow extends Window {
         date_panel = new javax.swing.JPanel();
         alertdate = new javax.swing.JLabel();
         properties_panel = new javax.swing.JPanel();
+        properties = new javax.swing.JLabel();
         editNote_btn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         sort_panel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         dateAsc_radio = new javax.swing.JRadioButton();
@@ -201,6 +217,7 @@ public class MainWindow extends Window {
         searchField = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        status = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         main_menu = new javax.swing.JMenu();
         account_menu = new javax.swing.JMenu();
@@ -353,22 +370,31 @@ public class MainWindow extends Window {
 
         properties_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
 
+        properties.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout properties_panelLayout = new javax.swing.GroupLayout(properties_panel);
         properties_panel.setLayout(properties_panelLayout);
         properties_panelLayout.setHorizontalGroup(
             properties_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(properties, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         properties_panelLayout.setVerticalGroup(
             properties_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 34, Short.MAX_VALUE)
+            .addComponent(properties, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        editNote_btn.setText("Edit...");
+        editNote_btn.setText("Edit");
         editNote_btn.setFocusable(false);
         editNote_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editNote_btnActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Delete");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -379,21 +405,24 @@ public class MainWindow extends Window {
             .addGroup(note_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(note_panelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(description_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(date_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(properties_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(note_panelLayout.createSequentialGroup()
                         .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(note_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(note_panelLayout.createSequentialGroup()
-                                .addGap(104, 104, 104)
-                                .addComponent(editNote_btn)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(description_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(date_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(properties_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())
+                    .addGroup(note_panelLayout.createSequentialGroup()
+                        .addComponent(note_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(note_panelLayout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(editNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))))
         );
         note_panelLayout.setVerticalGroup(
             note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -409,7 +438,9 @@ public class MainWindow extends Window {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(properties_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(editNote_btn))
+                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editNote_btn)
+                    .addComponent(jButton1)))
         );
 
         sort_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Sort"));
@@ -536,7 +567,7 @@ public class MainWindow extends Window {
             .addGroup(layout.createSequentialGroup()
                 .addGap(284, 284, 284)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,13 +575,19 @@ public class MainWindow extends Window {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addComponent(note_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(newNote_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchField)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(46, 46, 46))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 24, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(newNote_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(searchField)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(46, 46, 46))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,7 +595,7 @@ public class MainWindow extends Window {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(newNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -573,7 +610,9 @@ public class MainWindow extends Window {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(note_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
@@ -671,6 +710,19 @@ public class MainWindow extends Window {
         rebuildList();
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int i = JOptionPane.showConfirmDialog(this, "Delete this note?", "Delete note", JOptionPane.OK_CANCEL_OPTION);
+        if (i == 0){
+            if (app.deleteNote((Note) note_list.getSelectedValue())){
+                app.loadNotes();
+                rebuildList();
+                selectFirstNote();
+            } else {
+                JOptionPane.showMessageDialog(this, "Could not delete note");
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_item;
     private javax.swing.JMenu account_menu;
@@ -690,6 +742,7 @@ public class MainWindow extends Window {
     private javax.swing.JCheckBox filter_expired_cb;
     private javax.swing.JMenuItem helpContents_item;
     private javax.swing.JMenu help_menu;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -708,10 +761,12 @@ public class MainWindow extends Window {
     private javax.swing.JList note_list;
     private javax.swing.JPanel note_panel;
     private javax.swing.JScrollPane note_scroll;
+    private javax.swing.JLabel properties;
     private javax.swing.JPanel properties_panel;
     private javax.swing.JTextField searchField;
     private javax.swing.ButtonGroup sort_date_bgroup;
     private javax.swing.JPanel sort_panel;
+    private javax.swing.JLabel status;
     private javax.swing.JLabel title;
     private javax.swing.JPanel title_panel;
     private javax.swing.JMenu tools_item;
