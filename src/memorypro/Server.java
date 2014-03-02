@@ -24,7 +24,7 @@ public class Server {
         try {
             URLConnection connection = new URL(base + request).openConnection();
             connection.connect();
-            System.out.println(base+request);
+            //System.out.println(base+request);
             return connection ;
         } catch (Exception e){
             e.printStackTrace();

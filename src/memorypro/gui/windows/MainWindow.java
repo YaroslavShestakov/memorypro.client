@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import memorypro.MemoryPro;
@@ -68,6 +70,18 @@ public class MainWindow extends Window {
                         return ;
                 }
             });
+        
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                rebuildList();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                rebuildList();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                rebuildList();
+            }
+        });
     }
         
     public void selectLastNote(){
@@ -85,66 +99,37 @@ public class MainWindow extends Window {
      */
     public void rebuildList(){
         model.clear();
-        ArrayList<Note> notes = app.notehandler.getNotes();
+        String search = searchField.getText();
+        ArrayList<Note> notes ;
+
+        if (search != "")
+            notes = app.notehandler.getNotesByHeader(search);
+        else
+            notes = app.notehandler.getNotes();
+        
         boolean displayEnabled  = this.filter_enabled_cb.isSelected();
         boolean displayDisabled = this.filter_disabled_cb.isSelected();
         boolean displayActive   = this.filter_active_cb.isSelected();
         boolean displayExpired  = this.filter_expired_cb.isSelected();
         
         int index = 0 ;
-        for (Note note : notes){
-            if (
-                (
-                  (displayEnabled && note.isEnabled()) 
-                    || 
-                  (displayDisabled && !note.isEnabled())
-                ) && (    
-                  (displayActive && note.isActive())
-                    ||
-                  (displayExpired && !note.isActive())
-                )
-               ){
-                
-                model.add(index, note);
-                index++ ;
-            }
-        }
-        
-        resetNoteData();
-        last = (Note) note_list.getSelectedValue();
-        displayNote(last);
+        if (notes != null){
+            for (Note note : notes){
+                if (
+                    (
+                    (displayEnabled && note.isEnabled()) 
+                        || 
+                    (displayDisabled && !note.isEnabled())
+                    ) && (    
+                    (displayActive && note.isActive())
+                        ||
+                    (displayExpired && !note.isActive())
+                    )
+                ){
 
-    }
-
-    /**
-     * Updates the shown list with items containing the searched string.
-     * @param searchStr String searched from notes headers.
-     */
-    public void searchList(String searchStr){
-        model.clear();
-        ArrayList<Note> notes = app.notehandler.getNotesByHeader(searchStr);
-        boolean displayEnabled  = this.filter_enabled_cb.isSelected();
-        boolean displayDisabled = this.filter_disabled_cb.isSelected();
-        boolean displayActive   = this.filter_active_cb.isSelected();
-        boolean displayExpired  = this.filter_expired_cb.isSelected();
-        
-        int index = 0 ;
-        if (notes != null)
-        for (Note note : notes){
-            if (
-                (
-                  (displayEnabled && note.isEnabled()) 
-                    || 
-                  (displayDisabled && !note.isEnabled())
-                ) && (    
-                  (displayActive && note.isActive())
-                    ||
-                  (displayExpired && !note.isActive())
-                )
-               ){
-                
-                model.add(index, note);
-                index++ ;
+                    model.add(index, note);
+                    index++ ;
+                }
             }
         }
         
@@ -204,13 +189,13 @@ public class MainWindow extends Window {
         jButton1 = new javax.swing.JButton();
         newNote_btn = new javax.swing.JButton();
         searchField = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         filter_enabled_cb = new javax.swing.JCheckBox();
         filter_disabled_cb = new javax.swing.JCheckBox();
         filter_expired_cb = new javax.swing.JCheckBox();
         filter_active_cb = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
         status = new javax.swing.JLabel();
         note_scroll = new javax.swing.JScrollPane();
         note_list = new javax.swing.JList();
@@ -314,6 +299,7 @@ public class MainWindow extends Window {
         });
 
         jButton1.setText("Delete");
+        jButton1.setFocusable(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -328,14 +314,14 @@ public class MainWindow extends Window {
             }
         });
 
-        btnSearch.setText("Search");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+        searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+                searchFieldActionPerformed(evt);
             }
         });
 
         btnClear.setText("Clear");
+        btnClear.setFocusable(false);
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearActionPerformed(evt);
@@ -390,25 +376,26 @@ public class MainWindow extends Window {
                     .addComponent(filter_disabled_cb))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filter_expired_cb)
-                    .addComponent(filter_active_cb))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(filter_active_cb)
+                    .addComponent(filter_expired_cb))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(filter_enabled_cb)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filter_disabled_cb))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(filter_active_cb)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filter_expired_cb)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filter_enabled_cb)
+                    .addComponent(filter_active_cb))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filter_disabled_cb)
+                    .addComponent(filter_expired_cb))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Search");
 
         javax.swing.GroupLayout note_panelLayout = new javax.swing.GroupLayout(note_panel);
         note_panel.setLayout(note_panelLayout);
@@ -425,37 +412,38 @@ public class MainWindow extends Window {
                     .addGroup(note_panelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(title_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, note_panelLayout.createSequentialGroup()
-                                .addComponent(newNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, note_panelLayout.createSequentialGroup()
-                                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(editNote_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
-                                .addGap(124, 124, 124)
                                 .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(editNote_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                                    .addComponent(newNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(note_panelLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(searchField)
-                                    .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         note_panelLayout.setVerticalGroup(
             note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(note_panelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(newNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(newNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editNote_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(note_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(title_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -521,15 +509,16 @@ public class MainWindow extends Window {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(note_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(note_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(note_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(note_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -542,7 +531,7 @@ public class MainWindow extends Window {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(note_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(note_panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(note_scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 1, Short.MAX_VALUE)))
@@ -600,32 +589,26 @@ public class MainWindow extends Window {
     }//GEN-LAST:event_filter_expired_cbActionPerformed
 
     /**
-     * Applies a searchstring to the notelist, and refreshes the list
-     * to display only notes containgin the searched string.
-     * @param evt ActionEvent from the button.
-     */
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        searchList(searchField.getText());
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-    /**
      * Clears the search parameter and shows all notes in the list.
      * @param evt 
      */
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        rebuildList();
         searchField.setText("");
+        rebuildList();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int i = JOptionPane.showConfirmDialog(this, "Delete this note?", "Delete note", JOptionPane.OK_CANCEL_OPTION);
-        if (i == 0){
-            if (app.deleteNote((Note) note_list.getSelectedValue())){
-                app.loadNotes();
-                rebuildList();
-                selectFirstNote();
-            } else {
-                JOptionPane.showMessageDialog(this, "Could not delete note");
+        Note selected = (Note) note_list.getSelectedValue();
+        if (selected != null){
+            int i = JOptionPane.showConfirmDialog(this, "Delete this note?", "Delete note", JOptionPane.OK_CANCEL_OPTION);
+            if (i == 0){
+                if (app.deleteNote(selected)){
+                    app.loadNotes();
+                    rebuildList();
+                    selectFirstNote();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Could not delete note");
+                }
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -661,11 +644,14 @@ public class MainWindow extends Window {
         app.gui.closeWindow(this);
     }//GEN-LAST:event_logout_itemActionPerformed
 
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem about_item;
     private javax.swing.JLabel alertdate;
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JPanel date_panel;
     private javax.swing.JTextArea description;
     private javax.swing.JPanel description_panel;
@@ -680,6 +666,7 @@ public class MainWindow extends Window {
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel3;

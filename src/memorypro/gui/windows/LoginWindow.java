@@ -65,7 +65,6 @@ public class LoginWindow extends Window {
             }
         });
 
-        email.setText("Test");
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailActionPerformed(evt);
@@ -74,7 +73,6 @@ public class LoginWindow extends Window {
 
         email_label.setText("Email");
 
-        password.setText("Test");
         password.setPreferredSize(new java.awt.Dimension(100, 20));
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

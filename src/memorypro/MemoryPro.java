@@ -24,10 +24,17 @@ public class MemoryPro {
     public NoteHandler notehandler = new NoteHandler();
     
     protected User user ;
+    /**
+     * Session id, used for authentication.
+     */
     protected String sid = null ;
     protected Display display = new Display();
     protected Timer timer = new Timer();
         
+    /**
+     * Creates a MemoryPro object.
+     * @param useGUI Determines whether Graphics User Interface should be used.
+     */
     public MemoryPro(boolean useGUI) {
         NoteHandler nh = new NoteHandler();
         if (useGUI){
@@ -36,6 +43,10 @@ public class MemoryPro {
         }
     }
     
+    /**
+     * Returns User object container
+     * @return User object
+     */
     public User getUser(){
         return this.user ;
     }
@@ -185,6 +196,11 @@ public class MemoryPro {
         return false ;
     }
     
+    /**
+     * Deletes a note from database
+     * @param note a Note object to delete
+     * @return true on success and false on failure
+     */
     public boolean deleteNote(Note note){
         if (this.sid != null){
             String request = "?action=delete_note" ;
@@ -209,6 +225,11 @@ public class MemoryPro {
         return false ;
     }
     
+    /**
+     * Edits the note data
+     * @param note Note object with new information
+     * @return true on success and false on failure
+     */
     public boolean editNote(Note note){
         if (this.sid != null){
             String request = "?action=edit_note&sid=" + Server.encode(this.sid) ;
@@ -247,6 +268,10 @@ public class MemoryPro {
         System.exit(0);
     }
     
+    /**
+     * Prints contents of an object.
+     * @param o Any object
+     */
     public void print(Object o){
         System.out.println(o);
     }
@@ -267,6 +292,15 @@ public class MemoryPro {
         this.sid = null ;
     }
 
+    /**
+     * Registers a new user, add data to the database.
+     * @param email Email/username
+     * @param pass  Password
+     * @param firstname First name
+     * @param lastname Last name
+     * @param phone Phone
+     * @return true on success and false on failure
+     */
     public boolean register(String email, String pass, String firstname, String lastname, String phone) {
         String request = "?action=register";
         request += "&data[email]=" + Server.encode(email);
@@ -274,7 +308,7 @@ public class MemoryPro {
         request += "&data[firstname]=" + Server.encode(firstname);
         request += "&data[lastname]=" + Server.encode(lastname);
         request += "&data[phone]=" + Server.encode(phone);
-
+        
         URLConnection connection = Server.getConnection(request);
         if (connection != null) {
             String json = Server.getResponse(connection);
@@ -291,19 +325,20 @@ public class MemoryPro {
     }
     
         
+    /**
+     * Schedules alerts for notes of the current user.
+     */
     public void scheduleTimer(){
         timer.cancel();
         timer.purge();
         timer = new Timer();
         
         Date now = new Date();
-        System.out.println(now);
         for (final Note note : notehandler.getNotes()){
             
             final Date alertdate = note.getAlertDate() ;
             if (note.isEnabled() && alertdate.after(now)){
                 long delay = alertdate.getTime() - now.getTime();
-                System.out.println(delay);
                 timer.schedule(new TimerTask(){
 
                     @Override
