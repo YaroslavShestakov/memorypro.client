@@ -121,7 +121,7 @@ public class Note {
     public String toString() {
         String strToReturn =  title ;
         if (alertdate != null){
-            strToReturn += "                        " +  (new SimpleDateFormat("dd-mm-yy HH:mm")).format(alertdate) ;
+            strToReturn += "                        " +  (new SimpleDateFormat("dd-MM-yy HH:mm")).format(alertdate) ;
         }
         return strToReturn;
     }
