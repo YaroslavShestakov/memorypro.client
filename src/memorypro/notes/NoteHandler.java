@@ -1,5 +1,7 @@
 package memorypro.notes;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.swing.JOptionPane;
 import memorypro.gui.windows.MainWindow;
 import memorypro.gui.windows.NewNoteWindow;
 /**
@@ -46,7 +48,7 @@ public class NoteHandler {
      * Returns all saved notes.
      * @return Saved notes.
      */
-    public ArrayList getNotes(){
+    public ArrayList<Note> getNotes(){
         return this.notes ;
     }
     

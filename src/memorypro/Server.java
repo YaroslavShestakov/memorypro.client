@@ -11,11 +11,11 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author 
+ * @author Yaroslav Shestakov
  */
 public class Server {
-    private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
-    //private static final String base = "http://localhost/mp/api/" ;
+    //private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
+    private static final String base = "http://localhost/mp/api/" ;
   
   public static final String MySQL_TS_FORMAT = "yyyy-MM-dd HH:mm:ss" ;
        
@@ -24,6 +24,7 @@ public class Server {
         try {
             URLConnection connection = new URL(base + request).openConnection();
             connection.connect();
+            System.out.println(base+request);
             return connection ;
         } catch (Exception e){
             e.printStackTrace();

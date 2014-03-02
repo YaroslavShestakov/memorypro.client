@@ -40,11 +40,9 @@ public class AccountWindow extends Window {
         };
         
         User tmp = app.getUser();
-        String name = tmp.firstname;
-        if (!tmp.lastname.equals("")) {
-            name += " " + tmp.lastname;
-        }
-        userName.setText(name);
+        userName.setText(tmp.firstname);
+        lastname.setText(tmp.lastname);
+        password.setText(tmp.password);
         email.setText(tmp.email);
         userName.getDocument().addDocumentListener(doclistener);
         lastname.getDocument().addDocumentListener(doclistener);
@@ -119,9 +117,6 @@ public class AccountWindow extends Window {
         repass_comment = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lastname = new javax.swing.JTextField();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         jButton1.setText("Edit");
 
@@ -183,14 +178,6 @@ public class AccountWindow extends Window {
         jLabel5.setText("Last Name");
 
         lastname.setEditable(false);
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -282,6 +269,8 @@ public class AccountWindow extends Window {
         password.setEditable(true);
         rePassword.setEditable(true);
         email.setEditable(true);
+        
+        System.out.println(userName.getText());
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -292,6 +281,12 @@ public class AccountWindow extends Window {
         password.setEditable(false);
         rePassword.setEditable(false);
         email.setEditable(false);
+        
+        System.out.println(userName.getText());
+//        app.user.firstname = userName.getText();
+//        app.user.lastname = lastname.getText();
+//        app.user.email = email.getText();
+//        app.user.password = String.valueOf(password.getPassword());
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -320,9 +315,6 @@ public class AccountWindow extends Window {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField lastname;
     private javax.swing.JLabel pass_comment;

@@ -119,10 +119,13 @@ public class Note {
      */
     @Override
     public String toString() {
-        String strToReturn =  title ;
+        String strToReturn = "";
         if (alertdate != null){
-            strToReturn += "                        " +  (new SimpleDateFormat("dd-MM-yy HH:mm")).format(alertdate) ;
+//            strToReturn += "                        " +  (new SimpleDateFormat("dd-mm-yy HH:mm")).format(alertdate) ;
+            strToReturn += (new SimpleDateFormat("dd.MM.yyyy")).format(alertdate) ;
+            strToReturn += " - ";
         }
+        strToReturn += title;
         return strToReturn;
     }
 
