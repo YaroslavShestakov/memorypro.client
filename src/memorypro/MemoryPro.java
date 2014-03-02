@@ -40,10 +40,6 @@ public class MemoryPro {
         }
     }
     
-    public User getUser(){
-        return this.user ;
-    }
-    
     /**
      * Login to the program.
      * @param email User's email address.
@@ -51,9 +47,7 @@ public class MemoryPro {
      * @return Returns true if login succeeds.
      */
     public boolean login(String email, String password){
-        String request = "?action=login" ;
-        request += "&data[email]="    + Server.encode(email) ;
-        request += "&data[password]=" + Server.encode(password) ;
+        String request = "?action=login&data[email]="+email+"&data[password]="+password ;
         
         URLConnection connection = Server.getConnection(request);
         if (connection != null){
@@ -100,7 +94,7 @@ public class MemoryPro {
      */
     public boolean loadNotes(){
         if (this.sid != null){
-            String request = "?action=get_notes&sid="+Server.encode(this.sid) ;
+            String request = "?action=get_notes&sid="+this.sid ;
 
             URLConnection connection = Server.getConnection(request);
             if (connection != null){
@@ -121,12 +115,11 @@ public class MemoryPro {
                         
                                                     
                         // Timestamp from MySQL is in format of yyyy-MM-dd HH:mm:ss
-                        DateFormat ts_format = new SimpleDateFormat(Server.MySQL_TS_FORMAT);
+                        DateFormat ts_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         
                         for (int i = 0 ; i < notes.length() ; i++){
                             JSONObject obj = notes.getJSONObject(i);
                             
-                            Integer id    = obj.getInt("id");
                             String title = obj.getString("title");
                             String descr = obj.getString("description");
                             Boolean enabled = "1".equals(obj.getString("enabled"));
@@ -144,7 +137,6 @@ public class MemoryPro {
                             note.setDescription (descr);
                             note.setEnabled     (enabled);
                             note.setAlertDate   (alertdate);
-                            note.setId          (id);
 
                             notehandler.addNote(note);                          
                         }
@@ -164,63 +156,10 @@ public class MemoryPro {
     public boolean addNote(Note note){
         if (this.sid != null){
             String request = "?action=add_note&sid="+this.sid ;
-            request += "&data[title]="          + Server.encode(note.getTitle()); 
-            request += "&data[description]="    + Server.encode(note.getDescription());
-            request += "&data[enabled]="        + Server.encode(String.valueOf(note.isEnabled()));
-            request += "&data[alertdate]="      + Server.encode(
-                (new SimpleDateFormat(Server.MySQL_TS_FORMAT)).
-                    format(note.getAlertDate()));
-            
-            URLConnection connection = Server.getConnection(request);
-            if (connection != null){
-                String json = Server.getResponse(connection);
-                if (json != null){
-                    
-                    JSONObject response = new JSONObject(json);
-                    Boolean status   = response.getBoolean("status") ;
-                    
-                    if (status){
-                        return true ;
-                    }
-                }
-            }
-        }
-        return false ;
-    }
-    
-    public boolean deleteNote(Note note){
-        if (this.sid != null){
-            String request = "?action=delete_note" ;
-            request += "&sid="      + Server.encode(this.sid) ;
-            request += "&data[id]=" + Server.encode(String.valueOf(note.getId()));
-            
-            URLConnection connection = Server.getConnection(request);
-            if (connection != null){
-                String json = Server.getResponse(connection);
-                if (json != null){
-                    
-                    JSONObject response = new JSONObject(json);
-                    Boolean status   = response.getBoolean("status") ;
-                    
-                    if (status){
-                        return true ;
-                    }
-                }
-            }
-        }
-        return false ;
-    }
-    
-    public boolean editNote(Note note){
-        if (this.sid != null){
-            String request = "?action=edit_note&sid=" + Server.encode(this.sid) ;
-            request += "&data[id]="             + Server.encode(String.valueOf(note.getId())); 
-            request += "&data[title]="          + Server.encode(note.getTitle()); 
-            request += "&data[description]="    + Server.encode(note.getDescription());
-            request += "&data[enabled]="        + Server.encode(String.valueOf(note.isEnabled()));
-            request += "&data[alertdate]="      + Server.encode(
-                    (new SimpleDateFormat(Server.MySQL_TS_FORMAT))
-                    .format(note.getAlertDate()));
+            request += "&data[title]="          + note.getTitle(); 
+            request += "&data[description]="    + note.getDescription();
+            request += "&data[enabled]="        + note.isEnabled();
+            request += "&data[alertdate]="      + note.getAlertDate();
             
             URLConnection connection = Server.getConnection(request);
             if (connection != null){
@@ -267,27 +206,34 @@ public class MemoryPro {
         this.user = new User();
         this.sid = null ;
     }
+    
+    public User getUser() {
+        return user;
+    }
 
     public boolean register(String email, String pass, String firstname, String lastname, String phone) {
-        String request = "?action=register";
-        request += "&data[email]=" + Server.encode(email);
-        request += "&data[password]=" + Server.encode(pass);
-        request += "&data[firstname]=" + Server.encode(firstname);
-        request += "&data[lastname]=" + Server.encode(lastname);
-        request += "&data[phone]=" + Server.encode(phone);
-
-        URLConnection connection = Server.getConnection(request);
-        if (connection != null) {
-            String json = Server.getResponse(connection);
-
-            if (json != null) {
-                JSONObject response = new JSONObject(json);
-                Boolean status = response.getBoolean("status");
-
-                return status;
+        try {
+            String request = "?action=register" ;
+            request += "&data[email]="      + URLEncoder.encode(email, "UTF-8") ;
+            request += "&data[password]="   + URLEncoder.encode(pass, "UTF-8") ;
+            request += "&data[firstname]="  + URLEncoder.encode(firstname, "UTF-8") ;
+            request += "&data[lastname]="   + URLEncoder.encode(lastname, "UTF-8") ;
+            request += "&data[phone]="      + URLEncoder.encode(phone, "UTF-8") ;
+            
+            URLConnection connection = Server.getConnection(request);
+            if (connection != null){
+                String json = Server.getResponse(connection);
+                
+                if (json != null){
+                    JSONObject response = new JSONObject(json);
+                    Boolean status   = response.getBoolean("status") ;
+                    
+                    return status ;
+                }
             }
+        } catch (UnsupportedEncodingException ex) {
+            
         }
-        
         return false ;
     }
 }
