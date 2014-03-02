@@ -62,7 +62,7 @@ public class GUI {
                 window = new LoginWindow(app);
                 window.setResizable(false);
                 window.setTitle("MemoryPro [login]");
-                window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             } else if (type == Window.REGISTER){
                 window = new RegistrationWindow(app);
                 window.setResizable(false);
