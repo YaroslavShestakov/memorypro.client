@@ -206,6 +206,10 @@ public class MemoryPro {
         this.user = new User();
         this.sid = null ;
     }
+    
+    public User getUser() {
+        return user;
+    }
 
     public boolean register(String email, String pass, String firstname, String lastname, String phone) {
         try {
