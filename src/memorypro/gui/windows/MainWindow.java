@@ -43,7 +43,9 @@ public class MainWindow extends Window {
             public void valueChanged(ListSelectionEvent ev) {
                 if (true) { //ev.getValueIsAdjusting()
                   last = (Note) note_list.getSelectedValue();
-                  MainWindow.this.displayNote(last);
+                  if (last != null){
+                      MainWindow.this.displayNote(last);
+                  }
                 }
             }
         });
@@ -161,8 +163,6 @@ public class MainWindow extends Window {
             description.setText(note.getDescription());
             alertdate.setText(note.getAlertDate().toString());
             properties.setText((note.isEnabled() ? "Alert is enabled" : "Alert is disabled"));
-            
-            System.out.println(note.isActive());
         } else 
             resetNoteData();
     }
