@@ -2,18 +2,13 @@ package memorypro;
 
 import memorypro.utils.Display;
 import memorypro.gui.GUI;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.JOptionPane;
 import memorypro.gui.windows.Window;
 import memorypro.notes.Note;
 import memorypro.notes.NoteHandler;
@@ -31,6 +26,7 @@ public class MemoryPro {
     protected User user ;
     protected String sid = null ;
     protected Display display = new Display();
+    protected Timer timer = new Timer();
         
     public MemoryPro(boolean useGUI) {
         NoteHandler nh = new NoteHandler();
@@ -129,7 +125,7 @@ public class MemoryPro {
                             Integer id    = obj.getInt("id");
                             String title = obj.getString("title");
                             String descr = obj.getString("description");
-                            Boolean enabled = "1".equals(obj.getString("enabled"));
+                            Boolean enabled =  obj.getBoolean("enabled");
                             String timestamp = obj.getString("alertdate");
                             
                             Date alertdate = null ;
@@ -148,7 +144,7 @@ public class MemoryPro {
 
                             notehandler.addNote(note);                          
                         }
-                        
+                        scheduleTimer();
                     }
                 }
             }
@@ -180,6 +176,7 @@ public class MemoryPro {
                     Boolean status   = response.getBoolean("status") ;
                     
                     if (status){
+                        scheduleTimer();
                         return true ;
                     }
                 }
@@ -203,6 +200,7 @@ public class MemoryPro {
                     Boolean status   = response.getBoolean("status") ;
                     
                     if (status){
+                        scheduleTimer();
                         return true ;
                     }
                 }
@@ -231,6 +229,7 @@ public class MemoryPro {
                     Boolean status   = response.getBoolean("status") ;
                     
                     if (status){
+                        scheduleTimer();
                         return true ;
                     }
                 }
@@ -289,5 +288,35 @@ public class MemoryPro {
         }
         
         return false ;
+    }
+    
+        
+    public void scheduleTimer(){
+        timer.cancel();
+        timer.purge();
+        timer = new Timer();
+        
+        Date now = new Date();
+        System.out.println(now);
+        for (final Note note : notehandler.getNotes()){
+            
+            final Date alertdate = note.getAlertDate() ;
+            if (note.isEnabled() && alertdate.after(now)){
+                long delay = alertdate.getTime() - now.getTime();
+                System.out.println(delay);
+                timer.schedule(new TimerTask(){
+
+                    @Override
+                    public void run() {
+                        JOptionPane.showMessageDialog(null,
+                                note.getDescription() + "\n"+
+                                (new SimpleDateFormat("dd-mm-yy HH:mm")).format(alertdate),
+                                "Notification: " + note.getTitle(),
+                        JOptionPane.WARNING_MESSAGE);
+                    }
+
+                }, delay);
+            }
+        }
     }
 }
