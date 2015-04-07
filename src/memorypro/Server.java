@@ -14,8 +14,8 @@ import java.util.logging.Logger;
  * @author Yaroslav Shestakov
  */
 public class Server {
-    //private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
-    private static final String base = "http://localhost/mp/api/" ;
+    private static final String base = "http://koti.tamk.fi/~c2yshest/mp/api/" ;
+//    private static final String base = "http://localhost/mp/api/" ;
   
   public static final String MySQL_TS_FORMAT = "yyyy-MM-dd HH:mm:ss" ;
        
